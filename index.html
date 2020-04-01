@@ -1,64 +1,66 @@
 <!DOCTYPE html>
 <html>
- <head>
-   <style>
-     font-size:20px;
-     background:#2d2d2d;
-   </style>
-   <script>
-     var nombres=Array();
-     nombres[0]="1-Zampandotortas 2003 + bateria.mp3"
-     nombres[1]="2-Hobbits 2006 + bateria.mp3"
-     nombres[2]="3-Topando el mundo. unico demo 2004 + bateria.mp3"
-     nombres[3]="4-El mundo es feliz. Ensayo 2006 + bateria.mp3"
-     nombres[4]="5-Gandaralf 2003 + bateria.mp3"
-     nombres[5]="6-Boromir 2003 + bateria.mp3"
-   </script>
- </head>
-  <body>
-   <div>
-  <audio controls="controls" autobuffer="autobuffer"><source id="src1">  
-  </audio>
-  <a id="link1" href="" download></a>
-    </div>
-   <div>
-  <audio controls="controls" autobuffer="autobuffer"><source id="src2">  
-  </audio>
-  <a id="link2" href="" download></a>
-    </div>
-   <div>
-  <audio controls="controls" autobuffer="autobuffer"><source id="src3">  
-  </audio>  
-  <a id="link3" href="" download></a>
-    </div>
-   <div>   
-  <audio controls="controls" autobuffer="autobuffer"><source id="src4">  
-  </audio>
-  <a id="link4" href="" download></a>
-   </div>
-   <div>    
-  <audio controls="controls" autobuffer="autobuffer"><source id="src5">  
-  </audio>
-    <a id="link5" href="" download></a>    
-    </div>
-   <div>  
-  <audio controls="controls" autobuffer="autobuffer"><source id="src6">      
-  </audio>  
-    <a id="link6" href="" download></a>    
-    /<div>
-  <script>
-    //todo agregar los audio controls y links también en el loop, etc..
+    <head>
+        <style>
+            body{
+        font - size: 20px;
+        background: #2d2d2d;
+            }
+        </style>
+        <script>
+          var nombres=Array();
+          nombres[0]="1-Zampandotortas 2003 + bateria.mp3"
+          nombres[1]="2-Hobbits 2006 + bateria.mp3"
+          nombres[2]="3-Topando el mundo. unico demo 2004 + bateria.mp3"
+          nombres[3]="4-El mundo es feliz. Ensayo 2006 + bateria.mp3"
+          nombres[4]="5-Gandaralf 2003 + bateria.mp3"
+          nombres[5]="6-Boromir 2003 + bateria.mp3"
+        </script>
+    </head>
+    <body>
+        <div>
+            <audio controls="controls" autobuffer="autobuffer"><source id="src1">  
+            </audio>
+            <a id="link1" href="" download></a>
+        </div>
+        <div>
+            <audio controls="controls" autobuffer="autobuffer"><source id="src2">  
+            </audio>
+            <a id="link2" href="" download></a>
+        </div>
+        <div>
+            <audio controls="controls" autobuffer="autobuffer"><source id="src3">  
+            </audio>  
+            <a id="link3" href="" download></a>
+        </div>
+        <div>   
+            <audio controls="controls" autobuffer="autobuffer"><source id="src4">  
+            </audio>
+            <a id="link4" href="" download></a>
+        </div>
+        <div>    
+            <audio controls="controls" autobuffer="autobuffer"><source id="src5">  
+            </audio>
+            <a id="link5" href="" download></a>    
+        </div>
+        <div>  
+            <audio controls="controls" autobuffer="autobuffer"><source id="src6">      
+            </audio>  
+            <a id="link6" href="" download></a>    
+            /</div>
+        <script>
+          //todo agregar los audio controls y links también en el loop, etc..
     
-   function init(){
-     for(var i=0;i<nombres.length;i++){
-        document.getElementById("link"+i).href= nombres[i];
-        document.getElementById("link"+i).innerHTML=nombres[i];
-        document.getElementById("src"+i).src=nombres[i];
-     } 
-   }
+         function init(){
+        for (var i = 0; i < nombres.length; i++){
+           document.getElementById("link" + i).href = nombres[i];
+           document.getElementById("link" + i).innerHTML = nombres[i];
+           document.getElementById("src" + i).src = nombres[i];
+           } 
+         }
     
-   init();
-   </script>
-  
-  </body>
+         init();
+        </script>
+
+    </body>
 </html>
