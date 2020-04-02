@@ -20,7 +20,7 @@
             }
             .reproductor{
                 width:80%;
-                height:20%;
+                height:18%;
             }
             .lordof{
                 font-family:'Lordof';
@@ -37,40 +37,43 @@
           nombres[5]="Boromir 2003 y bateria.mp3"
         </script>
         <link rel="shortcut icon" href="/img/favicon.png">
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v6.0"></script>
     </head>    
     <body>
-        <h1 class="lordof">Los Topes</h1>
-        <h4 class="lordof">Una leyenda, un lujo.</h4>
-        <div>
-            <audio id="au1" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src1">  
-            </audio>            
-        </div>
+        <h2 class="lordof">Los Topes</h2>
+        <div style="text-align:right;" class="fb-like" data-href="https://www.facebook.com/Los-Topes-107060674064080/" data-width="" data-layout="box_count" data-action="like" data-size="small" data-share="false"></div>
+        <h5 class="lordof">Una leyenda, un lujo.</h5>
         <a id="link1" href="" download></a>
         <div>
-            <audio id="au2" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src2">  
+            <audio id="au1" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src1" type="audio/mp3">  
             </audio>            
-        </div>
+        </div>        
         <a id="link2" href="" download></a>
         <div>
-            <audio id="au3" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src3">  
-            </audio>              
-        </div>
-        <a id="link3" href="" download></a>
-        <div>   
-            <audio id="au4" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src4">  
+            <audio id="au2" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src2" type="audio/mp3">  
             </audio>            
-        </div>
-        <a id="link4" href="" download></a>
-        <div>    
-            <audio id="au5" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src5">  
-            </audio>        
-        </div>
-            <a id="link5" href="" download></a>    
-        <div>  
-            <audio id="au6" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src6">      
+        </div>        
+        <a id="link3" href="" download></a>
+        <div>
+            <audio id="au3" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src3" type="audio/mp3">  
             </audio>              
-         </div>
-        <a id="link6" href="" download></a>    
+        </div>        
+        <a id="link4" href="" download></a>
+        <div>   
+            <audio id="au4" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src4" type="audio/mp3">  
+            </audio>            
+        </div>        
+        <a id="link5" href="" download></a>    
+        <div>    
+            <audio id="au5" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src5" type="audio/mp3">  
+            </audio>        
+        </div>        
+        
+        <a id="link6" href="" download></a>
+        <div>  
+            <audio id="au6" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src6" type="audio/mp3">      
+            </audio>              
+        </div>        
         <script>
           //todo agregar los audio controls y links también en el loop, etc..
                
@@ -89,7 +92,7 @@
          }
     
          init();
-            //TODO
+            //TODO        
         document.getElementById('au1').onended=function() {                                      
                 document.getElementById('au2').play();                 
         };    
@@ -108,5 +111,7 @@
             
         </script>
 
+    <div id="fb-root"></div>
+   
     </body>
 </html>
