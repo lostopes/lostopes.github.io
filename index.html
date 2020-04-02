@@ -5,111 +5,168 @@
         <meta name="viewport" content="width=device-width, user-scalable=no" />    
         <style>
             @font-face {
-                font-family: 'Lordof';
-                src: url('/img/RingbearerMedium-w173.ttf');
+                	font-family: 'ringFont';
+                	src: url('img/RingbearerMedium-w173.ttf');                	                
                 }
-           body{
-                font-family:'Arial';
-                font-size: 1em;
+           		@font-face {
+                font-family: 'hobbitFont';
+                	src: url('img/HobbitonHandscrawlRegular-eZA3.ttf');
+                }
+                @font-face {
+                	font-family: 'bilboFont';
+                	src: url('img/BilboHandRegular-L3MZ.ttf');
+                }
+
+           body{           		
                 background: #2d2d2d;
-                text-align: center;               
-            }
-            a:link {
-              color: lightgray;
+                text-align: center;                                                              
+			    background-image:url('img/fondo0.jpg'); 
+			    -webkit-background-size: cover;
+			    -moz-background-size: cover;
+			    -o-background-size: cover;
+			    background-size: cover; 
+                background-repeat: no-repeat;                
+  				background-attachment: fixed;
+  				background-position: center; 
+            }            
+
+			
+            a:link {              
               text-decoration: none;
             }
+            a:visited
+			{
+    			text-decoration:none;
+    		}
+
             .reproductor{
-                width:80%;
-                height:18%;
+                width:75%;
+                height:2.1em;
             }
-            .lordof{
-                font-family:'Lordof';
-                color:white;
+            .lordof{                
+                color:gold;
+                text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
             }
+            .titulos{
+       			font-size: 1.4em; /* tamaño letra*/
+       			font-family:'hobbitFont';             			
+            	color: palegoldenrod;            	
+            	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+            }
+            audio::-webkit-media-controls-panel, video::-webkit-media-controls-panel {
+			    background-color: darkgray;
+			    border:none;
+			    border-radius: 0px;			    
+			}			
+			audio {			
+				background-color: darkgray;
+				border:none;
+			    border-radius: 0px;
+			}
+
         </style>
+         
         <script>
           var nombres=Array();
-          nombres[0]="Zampando tortas 2003 y batería.mp3"
-          nombres[1]="Hobbits 2006 y batería.mp3"
-          nombres[2]="Topando el mundo. único demo 2004 y batería.mp3"
-          nombres[3]="El mundo es feliz. Ensayo 2006 y batería.mp3"
-          nombres[4]="Gandaralf 2003 y batería.mp3"
-          nombres[5]="Boromir 2003 y batería.mp3"
+          nombres[0]="Zampando tortas-2003.mp3"
+          nombres[1]="Hobbits-último ensayo 2006.mp3"
+          nombres[2]="Topes-única demo 2004.mp3"
+          nombres[3]="El mundo es feliz-último ensayo 2006.mp3"
+          nombres[4]="Gandaralf-2003.mp3"
+          nombres[5]="Boromir-2003.mp3"
+        
+          
         </script>
-        <link rel="shortcut icon" href="/img/favicon.png">
+        <link rel="shortcut icon" href="img/favicon.png">
     </head>    
     <body>
-        <h2 class="lordof">Los Topes</h2>        
-        <h5 class="lordof">Una leyenda, un lujo.</h5>
-        <span id="link1" href="" download></span>
-        <div>
-            <audio controls id="au1" class="reproductor" autobuffer="autobuffer"><source id="src1" type="audio/mpeg">  
-            </audio>            
-        </div>        
-        <span id="link2" href="" download></span>
-        <div>
-            <audio controls id="au2" class="reproductor" autobuffer="autobuffer"><source id="src2" type="audio/mpeg">  
-            </audio>            
-        </div>        
-        <span id="link3" href="" download></span>
-        <div>
-            <audio controls id="au3" class="reproductor" autobuffer="autobuffer"><source id="src3" type="audio/mpeg">  
-            </audio>              
-        </div>        
-        <span id="link4" href="" download></span>
-        <div>   
-            <audio controls id="au4" class="reproductor" autobuffer="autobuffer"><source id="src4" type="audio/mpeg">  
-            </audio>            
-        </div>        
-        <span id="link5" href="" download></span>    
-        <div>    
-            <audio controls id="au5" class="reproductor" autobuffer="autobuffer"><source id="src5" type="audio/mpeg">  
-            </audio>        
-        </div>                
-        <span id="link6" href="" download></span>
-        <div>  
-            <audio controls id="au6" class="reproductor" autobuffer="autobuffer"><source id="src6" type="audio/mpeg">      
-            </audio>              
-        </div>        
+    	<div class="background-image">    	
+    	</div>    	
+    	<div  id="TierraMedia" style="position: absolute; left:0; right:0;">     	    	
+    	<div class="lordof" style="position: relative; font-family:'ringFont'; font-size: 2.5em;">Los Topes</div>        
+        <div class="lordof" style="position: relative; font-family:'bilboFont'; font-weight: bold; font-size: 2.1em; margin-bottom: 1.2em;">Grabaciones Antiguas</div>              	                
+        </div>
         <script>
           //todo agregar los audio controls y links también en el loop, etc..
                
-         function init(){
-            for (var i = 0; i < nombres.length; i++){
+         function init(){         	
+
+			var divGeneral = document.createElement("div");
+            for (let i = 0; i < nombres.length; i++){
                //console.log(nombres[i]);
-            document.getElementById("link" + (i+1)).innerHTML = nombres[i].replace(/.mp3/,'');
-            /*document.getElementById("link" + (i+1)).href = '/mp3/'+nombres[i];*/
-            document.getElementById("src" + (i+1)).src = '/mp3/'+nombres[i];
-              /*if(i<nombres.length-1){
-                 document.getElementById('src'+(i+1)).onended=function() {                                      
-                    document.getElementById('src'+(i+2)).play();                 
+			
+            let k=(i+1);
+			//titulo o link
+         	let titulo = document.createElement("span");
+         	titulo.className ="titulos";
+         	//titulo.style.textAlign="left";         	
+         	titulo.id="link"+k
+         	titulo.href=""
+         	titulo.innerHTML = nombres[i].replace(/.mp3/,'');
+         	
+         	divGeneral.appendChild(titulo);   
+
+			//div
+         	let div = document.createElement("div");
+         	div.style.marginBottom= "1.5em";         	
+         	div.style.marginTop= "-1.5em";  //para corregir problema con "hobbitFont"
+         	//audio
+         	let audio = document.createElement("audio");         	
+         	audio.id       = 'au'+k;
+			audio.controls = 'controls';
+			audio.className ="reproductor";
+			audio.autobuffer="autobuffer";
+			audio.src      = 'mp3/'+nombres[i];
+			audio.type     = 'audio/mpeg';
+
+
+			div.appendChild(audio);			
+			divGeneral.appendChild(div);   			
+            
+              if(i<nombres.length-1){
+                 audio.onended=function() {                   	
+                    document.getElementById('au'+(k+1)).play();                                	
                 };    
-               }*/
-           } 
+               }
+           }
+           document.getElementById("TierraMedia").appendChild(divGeneral);
          }
     
-         init();
+        init();
+        var fondo=0;
+        setInterval( function(){
+        			    fondo =(fondo+1)%3;
+        				switch(fondo){
+        					case 0:
+        					document.body.style.backgroundImage = "url('img/fondo0.jpg')"; 
+        					break;
+        					case 1:
+ 							document.body.style.backgroundImage = "url('img/fondo1.jpg')"; 
+ 							break;
+ 							case 2: 							
+ 							document.body.style.backgroundImage = "url('img/fondo2.jpg')"; 
+ 							break;
+ 						}
+		       }, 60*1000);
+        	
+
             //TODO        
-        document.getElementById('au1').onended=function() {                                      
-                document.getElementById('au2').play();                 
-        };    
-            document.getElementById('au2').onended=function() {                                      
-                document.getElementById('au3').play();                 
-        };    
-            document.getElementById('au3').onended=function() {                                      
-                document.getElementById('au4').play();                 
-        };    
-            document.getElementById('au4').onended=function() {                                      
-                document.getElementById('au5').play();                 
-        };    
-            document.getElementById('au5').onended=function() {                                      
-                document.getElementById('au6').play();                 
-        };    
-            
+	    /*document.getElementById('au1').onended=function() {                                      
+	            document.getElementById('au2').play();                 
+	    };    
+	    document.getElementById('au2').onended=function() {                                      
+	            document.getElementById('au3').play();                 
+	    };    
+	    document.getElementById('au3').onended=function() {                                      
+	            document.getElementById('au4').play();                 
+	    };    
+	    document.getElementById('au4').onended=function() {                                      
+	            document.getElementById('au5').play();                 
+	    };    
+	    document.getElementById('au5').onended=function() {                                      
+	            document.getElementById('au6').play();                 
+	    };	    */    
         </script>           
     </body>
 </html>
 
-a:visited
-{
-    text-decoration:
