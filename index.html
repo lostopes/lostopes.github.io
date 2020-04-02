@@ -20,7 +20,7 @@
            body{           		
                 background: #2d2d2d;
                 text-align: center;                                                              
-			    background-image:url('img/fondo0.jpg'); 
+			    /*background-image:url('img/fondo0.jpg');*/
 			    -webkit-background-size: cover;
 			    -moz-background-size: cover;
 			    -o-background-size: cover;
@@ -75,7 +75,7 @@
           nombres[3]="El mundo es feliz-último ensayo 2006.mp3"
           nombres[4]="Gandaralf-2003.mp3"
           nombres[5]="Boromir-2003.mp3"
-        	var fondo=0;
+       	  var fondo=Math.floor(Math.random() * (nombres.length - 1) );
         </script>
         <link rel="shortcut icon" href="img/favicon.png">
     </head>    
@@ -84,7 +84,7 @@
     	</div>    	
     	<div  id="TierraMedia"  onclick="cambiarFondo()">     	    	
     	<div class="lordof" style="position: relative; font-family:'ringFont'; font-size: 2.6em;">Los Topes</div>        
-        <div class="lordof" style="position: relative; font-family:'bilboFont'; font-weight: bold; font-size: 2.2em; margin-bottom: .5em;">grabaciones antiguas</div>              	                
+        <div class="lordof" style="position: relative; font-family:'bilboFont'; font-weight: bold; font-size: 2.2em; margin-bottom: .5em;">Grabaciones antiguas</div>              	                
         <div id="lista">
         </div>                
         <script>
@@ -134,17 +134,20 @@
          }
     
               
-        function cambiarFondo(){
-	        	fondo =(fondo+1)%7;
-	        	document.body.style.backgroundImage = "url('img/fondo"+fondo+".jpg')";         				
+        function cambiarFondo(){	        	
+        	    fondo=(fondo+1)%7;
+	        	document.body.style.backgroundImage = "url('img/fondo"+fondo+".jpg')";         					        
         }
 
 		init(); 
-        setInterval( function(){
+		
+		cambiarFondo();
+        /*var timer=setInterval( function(){
         			    cambiarFondo();
-		}, 60*1000);
+		}, 60*1000);*/
        </script>                  
-       <div style="color:white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; font-weight:bold; font-family:'Times'; font-weight: bold; font-size: .8em; margin-top:5em;">*Los sonidos de batería no son originales,<br> fueron agregados grotescamente de recortes de youtube, <br> para intentar acompañar este momento de pandemia.<br> cuidensé de las maneras más extremas que puedan, <br>  pronto volveremos,<br> al olvido.</div>       
+       <div style="color:white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; font-weight:bold; font-family:'Times'; font-weight: bold; font-size: .8em; margin-top:5em;">*La percusión se agregó desde recortes de youtube, <br>no encajan, pero suman algo para acompañar este momento de pandemia.<br><br>Tomen los recaudos más extremos que puedan, <br>
+       pronto volveremos, al olvido.</div>
        
         </div>
     </body>
