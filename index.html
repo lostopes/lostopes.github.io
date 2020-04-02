@@ -6,11 +6,11 @@
         <style>
             @font-face {
                 font-family: 'Lordof';
-                src: url('RingbearerMedium-w173.ttf');
+                src: url('img/RingbearerMedium-w173.ttf');
                 }
            body{
                 font-family:'Lordof';
-                font-size: 1.2em;
+                font-size: 1em;
                 background: #2d2d2d;
                 text-align: center;               
             }
@@ -21,6 +21,9 @@
             .reproductor{
                 width:80%;
                 height:20%;
+            }
+            .lordof{
+                style="font-family:'Lordof';color:white;"
             }
         </style>
         <script>
@@ -35,6 +38,8 @@
         <link rel="shortcut icon" href="/img/favicon.png">
     </head>    
     <body>
+        <h1 class="lordof">Los Topes</h1>
+        <h4 class="lordof">Una leyenda, un lujo.</h4>
         <div>
             <audio class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src1">  
             </audio>            
@@ -71,8 +76,8 @@
          function init(){
             for (var i = 0; i < nombres.length; i++){
                //console.log(nombres[i]);
-             document.getElementById("link" + (i+1)).innerHTML = nombres[i].replace(/.mp3/,'');
-            document.getElementById("link" + (i+1)).href = nombres[i];            
+            document.getElementById("link" + (i+1)).innerHTML = nombres[i].replace(/.mp3/,'');
+            document.getElementById("link" + (i+1)).href = 'mp3/'+nombres[i];            
             document.getElementById("src" + (i+1)).src = 'mp3/'+nombres[i];
            } 
          }
