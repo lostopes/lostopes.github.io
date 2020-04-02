@@ -80,11 +80,11 @@
             document.getElementById("link" + (i+1)).innerHTML = nombres[i].replace(/.mp3/,'');
             document.getElementById("link" + (i+1)).href = '/mp3/'+nombres[i];            
             document.getElementById("src" + (i+1)).src = '/mp3/'+nombres[i];
-             document.getElementById('src'+(i+1)).addEventListener("ended",function() {
-                 if(i<nombres.length-1){                     
-                    document.getElementById('src'+(i+2)).play();
-                 }
-            });    
+              if(i<nombres.length-1){
+                 document.getElementById('src'+(i+1)).addEventListener("ended",function() {                                      
+                    document.getElementById('src'+(i+2)).play();                 
+                });    
+               }
            } 
          }
     
