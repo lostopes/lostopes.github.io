@@ -111,7 +111,8 @@
          function init(){         	
 
 			var divGeneral = document.getElementById("lista");
-            
+            let audios = Array();
+
             for (let i = 0; i < nombres.length; i++){               
             let k=(i+1);
 			//titulo o link
@@ -130,29 +131,35 @@
          	div.style.marginBottom= "1.2em";         	         	
          	div.style.marginTop= "-1.5em";  //para corregir problema/error de "hobbitFont"
          	//audio
-         	let audio = document.createElement("audio");         	
-         	audio.id       = 'au'+k;
-			audio.controls = 'controls';
-			audio.className ="reproductor";
-			audio.autobuffer="autobuffer";
-			audio.src      = 'mp3/'+nombres[i];
-			audio.type     = 'audio/mpeg';
+         	let audioObj = document.createElement("audio");         	
+         	
+
+         	audioObj.id       = 'au'+k;
+			audioObj.controls = 'controls';
+			audioObj.className ="reproductor";
+			audioObj.autobuffer="autobuffer";
+			audioObj.src      = 'mp3/'+nombres[i];
+			audioObj.type     = 'audio/mpeg';
 
 
-			div.appendChild(audio);			
+			div.appendChild(audioObj);			
 			divGeneral.appendChild(div);   			
             
               if(i<nombres.length-1){
-                 audio.onended=function() {     
+                 audioObj.onended=function() {     
                  	setFondo(k);
                     document.getElementById('au'+(k+1)).play();
                 };                    
                }
-               audio.onplay=function(){ 
+			   audios[i]=audioObj;
+               audioObj.onplay=function(){ 
                 	console.log(i);
-                	setFondo(i);                    
+                	setFondo(i);     
+                	for(index=0;index<audios.length;index++){
+            	    	audios[index].pause();           
+            		}    
                 };
-           }
+           	}
            document.getElementById("TierraMedia").appendChild(divGeneral);           
          }
     
