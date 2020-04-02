@@ -69,10 +69,10 @@
          
         <script>
           var nombres=Array();
-          nombres[0]="Zampando tortas-2003.mp3"
-          nombres[1]="Hobbits-último ensayo 2006.mp3"
+          nombres[0]="El mundo es feliz-último ensayo 2006.mp3"          
+          nombres[1]="Zampando tortas-2003.mp3"
           nombres[2]="Topes-única demo 2004.mp3"
-          nombres[3]="El mundo es feliz-último ensayo 2006.mp3"
+          nombres[3]="Hobbits-último ensayo 2006.mp3"
           nombres[4]="Gandaralf-2003.mp3"
           nombres[5]="Boromir-2003.mp3"
        	  var fondo=Math.floor(Math.random() * (nombres.length - 1) );
@@ -145,11 +145,15 @@
               if(i<nombres.length-1){
                  audio.onended=function() {     
                  	setFondo(k);
-                    document.getElementById('au'+(k+1)).play();                                	
-                };    
+                    document.getElementById('au'+(k+1)).play();
+                };                    
                }
+               audio.onplay=function(){ 
+                	console.log(i);
+                	setFondo(i);                    
+                };
            }
-           document.getElementById("TierraMedia").appendChild(divGeneral);
+           document.getElementById("TierraMedia").appendChild(divGeneral);           
          }
     
               
