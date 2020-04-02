@@ -156,7 +156,10 @@
                 	console.log(i);
                 	setFondo(i);     
                 	for(index=0;index<audios.length;index++){
-            	    	audios[index].pause();           
+                		if(index!=i){
+            	    		audios[index].pause();           
+            	    		audios[index].currentTime =0;
+            	    	}
             		}    
                 };
            	}
