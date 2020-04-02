@@ -80,15 +80,32 @@
             document.getElementById("link" + (i+1)).innerHTML = nombres[i].replace(/.mp3/,'');
             document.getElementById("link" + (i+1)).href = '/mp3/'+nombres[i];            
             document.getElementById("src" + (i+1)).src = '/mp3/'+nombres[i];
-              if(i<nombres.length-1){
+              /*if(i<nombres.length-1){
                  document.getElementById('src'+(i+1)).onended=function() {                                      
                     document.getElementById('src'+(i+2)).play();                 
                 };    
-               }
+               }*/
            } 
          }
     
          init();
+            //TODO
+        document.getElementById('src1')).onended=function() {                                      
+                document.getElementById('src2')).play();                 
+        };    
+            document.getElementById('src2')).onended=function() {                                      
+                document.getElementById('src3')).play();                 
+        };    
+            document.getElementById('src3')).onended=function() {                                      
+                document.getElementById('src4')).play();                 
+        };    
+            document.getElementById('src4')).onended=function() {                                      
+                document.getElementById('src5')).play();                 
+        };    
+            document.getElementById('src5')).onended=function() {                                      
+                document.getElementById('src6')).play();                 
+        };    
+            
         </script>
 
     </body>
