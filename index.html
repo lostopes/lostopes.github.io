@@ -76,13 +76,31 @@
           nombres[4]="Gandaralf-2003.mp3"
           nombres[5]="Boromir-2003.mp3"
        	  var fondo=Math.floor(Math.random() * (nombres.length - 1) );
+
+		   	
+		  var images = [];
+
+		  function preload() {
+		    for (var i = 0; i < arguments.length; i++) {
+		        images[i] = new Image();
+		        images[i].src = preload.arguments[i];
+		      }
+		   }
+			
+		   preload('img/fondo0.jpg',
+			    	'img/fondo1.jpg',
+			    	'img/fondo2.jpg',
+			    	'img/fondo3.jpg',
+			    	'img/fondo4.jpg',
+			    	'img/fondo5.jpg',
+			    	'img/fondo6.jpg');
         </script>
         <link rel="shortcut icon" href="img/favicon.png">
     </head>    
     <body>
     	<div class="background-image">    	
     	</div>    	
-    	<div  id="TierraMedia"  onclick="cambiarFondo()">     	    	
+    	<div  id="TierraMedia"  onclick="decirPalabra();">     	    	
     	<div class="lordof" style="position: relative; font-family:'ringFont'; font-size: 2.6em;">Los Topes</div>        
         <div class="lordof" style="position: relative; font-family:'bilboFont'; font-weight: bold; font-size: 2.2em; margin-bottom: .5em;">Grabaciones antiguas</div>              	                
         <div id="lista">
@@ -125,7 +143,8 @@
 			divGeneral.appendChild(div);   			
             
               if(i<nombres.length-1){
-                 audio.onended=function() {                   	
+                 audio.onended=function() {     
+                 	setFondo(k);
                     document.getElementById('au'+(k+1)).play();                                	
                 };    
                }
@@ -134,16 +153,20 @@
          }
     
               
-        function cambiarFondo(){	        	
+         function setFondo(fondo){
+         	document.body.style.backgroundImage = "url('img/fondo"+fondo+".jpg')";         					        
+         }
+
+        function rotarFondo(){	        	
         	    fondo=(fondo+1)%7;
-	        	document.body.style.backgroundImage = "url('img/fondo"+fondo+".jpg')";         					        
+	        	setFondo(f);
         }
 
 		init(); 
-		
-		cambiarFondo();
+		setFondo(0);
+		//rotarFondo();
         /*var timer=setInterval( function(){
-        			    cambiarFondo();
+        			    rotarFondo();
 		}, 60*1000);*/
        </script>                  
        <div style="color:white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; font-weight:bold; font-family:'Times'; font-weight: bold; font-size: .8em; margin-top:5em;">*La percusión se agregó desde recortes de youtube, <br>no encajan, pero suman algo para acompañar este momento de pandemia.<br><br>Tomen los recaudos más extremos que puedan, <br>
