@@ -42,32 +42,32 @@
         <h1 class="lordof">Los Topes</h1>
         <h4 class="lordof">Una leyenda, un lujo.</h4>
         <div>
-            <audio class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src1">  
+            <audio id="au1" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src1">  
             </audio>            
         </div>
         <a id="link1" href="" download></a>
         <div>
-            <audio class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src2">  
+            <audio id="au2" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src2">  
             </audio>            
         </div>
         <a id="link2" href="" download></a>
         <div>
-            <audio class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src3">  
+            <audio id="au3" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src3">  
             </audio>              
         </div>
         <a id="link3" href="" download></a>
         <div>   
-            <audio class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src4">  
+            <audio id="au4" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src4">  
             </audio>            
         </div>
         <a id="link4" href="" download></a>
         <div>    
-            <audio class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src5">  
+            <audio id="au5" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src5">  
             </audio>        
         </div>
             <a id="link5" href="" download></a>    
         <div>  
-            <audio class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src6">      
+            <audio id="au6" class="reproductor" controls="controls" autobuffer="autobuffer"><source id="src6">      
             </audio>              
          </div>
         <a id="link6" href="" download></a>    
@@ -90,20 +90,20 @@
     
          init();
             //TODO
-        document.getElementById('src1').onended=function() {                                      
-                document.getElementById('src2').play();                 
+        document.getElementById('au1').onended=function() {                                      
+                document.getElementById('au2').play();                 
         };    
-            document.getElementById('src2').onended=function() {                                      
-                document.getElementById('src3').play();                 
+            document.getElementById('au2').onended=function() {                                      
+                document.getElementById('au3').play();                 
         };    
-            document.getElementById('src3').onended=function() {                                      
-                document.getElementById('src4').play();                 
+            document.getElementById('au3').onended=function() {                                      
+                document.getElementById('au4').play();                 
         };    
-            document.getElementById('src4').onended=function() {                                      
-                document.getElementById('src5').play();                 
+            document.getElementById('au4').onended=function() {                                      
+                document.getElementById('au5').play();                 
         };    
-            document.getElementById('src5').onended=function() {                                      
-                document.getElementById('src6').play();                 
+            document.getElementById('au5').onended=function() {                                      
+                document.getElementById('au6').play();                 
         };    
             
         </script>
