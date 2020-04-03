@@ -5,39 +5,37 @@
         <meta name="viewport" content="width=device-width, user-scalable=no" />    
         <style>
             @font-face {
-                	font-family: 'ringFont';
-                	src: url('img/RingbearerMedium-w173.ttf');                	                
-                }
-           		@font-face {
+                font-family: 'ringFont';
+                src: url('img/RingbearerMedium-w173.ttf');                	                
+            }
+            @font-face {
                 font-family: 'hobbitFont';
-                	src: url('img/HobbitonHandscrawlRegular-eZA3.ttf');
-                }
-                @font-face {
-                	font-family: 'bilboFont';
-                	src: url('img/BilboHandRegular-L3MZ.ttf');
-                }
-
-           body{           		
+                src: url('img/HobbitonHandscrawlRegular-eZA3.ttf');
+            }
+            @font-face {
+                font-family: 'bilboFont';
+                src: url('img/BilboHandRegular-L3MZ.ttf');
+            }
+            body{           		
                 background: #2d2d2d;
                 text-align: center;                                                              
-			    /*background-image:url('img/fondo0.jpg');*/
-			    -webkit-background-size: cover;
-			    -moz-background-size: cover;
-			    -o-background-size: cover;
-			    background-size: cover; 
+                /*background-image:url('img/fondo0.jpg');*/
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover; 
                 background-repeat: no-repeat;                
-  				background-attachment: fixed;
-  				background-position: center; 
+                background-attachment: fixed;
+                background-position: center; 
             }            
 
-			
             a:link {              
-              text-decoration: none;
+                text-decoration: none;
             }
             a:visited
-			{
-    			text-decoration:none;
-    		}
+            {
+                text-decoration:none;
+            }
 
             .reproductor{
                 width:75%;
@@ -48,145 +46,129 @@
                 text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
             }
             .titulos{
-       			font-size: 1.35em; /* tamaño letra*/
-       			font-weight: bold;
-       			font-family:'hobbitFont';             			
-            	color: palegoldenrod;            	
-            	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+                font-size: 1.35em; /* tamaño letra*/
+                font-weight: bold;
+                font-family:'hobbitFont';             			
+                color: palegoldenrod;            	
+                text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
             }
             audio::-webkit-media-controls-panel, video::-webkit-media-controls-panel {
-			    background-color: #777;
-			    border:none;
-			    border-radius: 0px;			    
-			}			
-			audio {			
-				background-color: #777;
-				border:none;
-			    border-radius: 0px;
-			}
+                background-color: #777;
+                border:none;
+                border-radius: 0px;			    
+            }			
+            audio {			
+                background-color: #777;
+                border:none;
+                border-radius: 0px;
+            }
 
         </style>
-         
+
         <script>
-          var nombres=Array();
-          nombres[0]="El mundo es feliz-último ensayo 2006.mp3"          
-          nombres[1]="Zampando tortas-2003.mp3"
-          nombres[2]="Topes-única demo 2004.mp3"
-          nombres[3]="Hobbits-último ensayo 2006.mp3"
-          nombres[4]="Gandaralf-2003.mp3"
-          nombres[5]="Boromir-2003.mp3"
-       	  var fondo=Math.floor(Math.random() * (nombres.length - 1) );
+            var nombres = Array();
+            nombres[0] = "El mundo es feliz-último ensayo 2006.mp3"
+            nombres[1] = "Zampando tortas-2003.mp3"
+            nombres[2] = "Topes-única demo 2004.mp3"
+            nombres[3] = "Hobbits-último ensayo 2006.mp3"
+            nombres[4] = "Gandaralf-2003.mp3"
+            nombres[5] = "Boromir-2003.mp3"
+            var fondo = 0;//Math.floor(Math.random() * (nombres.length - 1));
 
-		   	
-		  var images = [];
 
-		  function preload() {
-		    for (var i = 0; i < arguments.length; i++) {
-		        images[i] = new Image();
-		        images[i].src = preload.arguments[i];
-		      }
-		   }
-			
-		   preload('img/fondo0.jpg',
-			    	'img/fondo1.jpg',
-			    	'img/fondo2.jpg',
-			    	'img/fondo3.jpg',
-			    	'img/fondo4.jpg',
-			    	'img/fondo5.jpg',
-			    	'img/fondo6.jpg');
+            var images = [];
+
+            function preload() {
+                for (var i = 0; i < nombres.length; i++) {
+                    images[i] = new Image();
+                    images[i].src = 'img/fondo' + i + '.jpg';
+                }
+            }
+            preload();
         </script>
         <link rel="shortcut icon" href="img/favicon.png">
+        <title>Los Topes</title>
     </head>    
-    <body>
-    	<div class="background-image">    	
-    	</div>    	
-    	<div  id="TierraMedia"  onclick="decirPalabra();">     	    	
-    	<div class="lordof" style="position: relative; font-family:'ringFont'; font-size: 2.6em;">Los Topes</div>        
-        <div class="lordof" style="position: relative; font-family:'bilboFont'; font-weight: bold; font-size: 2.2em; margin-bottom: .5em;">Grabaciones antiguas</div>              	                
-        <div id="lista">
-        </div>                
-        <script>
-          //todo agregar los audio controls y links también en el loop, etc..
-               
-         function init(){         	
-
-			var divGeneral = document.getElementById("lista");
-            let audios = Array();
-
-            for (let i = 0; i < nombres.length; i++){               
-            let k=(i+1);
-			//titulo o link
-         	let titulo = document.createElement("span");
-         	titulo.className ="titulos";
-         	//titulo.style.textAlign="left";         	
-         	titulo.id="link"+k
-         	titulo.href=""
-         	titulo.innerHTML = nombres[i].replace(/.mp3/,'');
-         	
-         	divGeneral.appendChild(titulo);   
-
-			//div
-         	let div = document.createElement("div");
-         	
-         	div.style.marginBottom= "1.2em";         	         	
-         	div.style.marginTop= "-1.5em";  //para corregir problema/error de "hobbitFont"
-         	//audio
-         	let audioObj = document.createElement("audio");         	
-         	
-
-         	audioObj.id       = 'au'+k;
-			audioObj.controls = 'controls';
-			audioObj.className ="reproductor";
-			audioObj.autobuffer="autobuffer";
-			audioObj.src      = 'mp3/'+nombres[i];
-			audioObj.type     = 'audio/mpeg';
-
-
-			div.appendChild(audioObj);			
-			divGeneral.appendChild(div);   			
+    <body>        
+        <div  id="TierraMedia"  onclick="decirPalabra();">     	    	
+            <div class="lordof" style="position: relative; font-family:'ringFont'; font-size: 2.6em;">Los Topes</div>        
+            <div class="lordof" style="position: relative; font-family:'bilboFont'; font-weight: bold; font-size: 2.2em; margin-bottom: .5em;">Grabaciones antiguas</div>              	                
             
-              if(i<nombres.length-1){
-                 audioObj.onended=function() {     
-                 	setFondo(k);
-                    document.getElementById('au'+(k+1)).play();
-                };                    
-               }
-			   audios[i]=audioObj;
-               audioObj.onplay=function(){ 
-                	console.log(i);
-                	setFondo(i);     
-                	for(index=0;index<audios.length;index++){
-                		if(index!=i){
-            	    		audios[index].pause();           
-            	    		audios[index].currentTime =0;
-            	    	}
-            		}    
-                };
-           	}
-           document.getElementById("TierraMedia").appendChild(divGeneral);           
-         }
-    
-              
-         function setFondo(fondo){
-         	document.body.style.backgroundImage = "url('img/fondo"+fondo+".jpg')";         					        
-         }
+	    <div id="lista">
+            </div>  
+		
+            <script>
+                function init() {
+                    var divGeneral = document.getElementById("lista");
+                    let audios = Array();
+                    for (let i = 0; i < nombres.length; i++) {
+                        let k = (i + 1);
+                        //titulo o link
+                        let titulo = document.createElement("span");
+                        titulo.className = "titulos";
+                        //titulo.style.textAlign="left";         	
+                        titulo.id = "link" + k
+                        titulo.href = ""
+                        titulo.innerHTML = nombres[i].replace(/.mp3/, '');
+                        divGeneral.appendChild(titulo);
 
-        function rotarFondo(){	        	
-        	    fondo=(fondo+1)%7;
-	        	setFondo(f);
-        }
+                        //div
+                        let div = document.createElement("div");
+                        div.style.marginBottom = "1.2em";
+                        div.style.marginTop = "-1.5em";  //para corregir problema/error de "hobbitFont"
+			    
+                        //audio
+                        let audioObj = document.createElement("audio");
+                        audioObj.id = 'au' + k;
+                        audioObj.controls = 'controls';
+                        audioObj.className = "reproductor";
+                        audioObj.autobuffer = "autobuffer";
+                        audioObj.src = 'mp3/' + nombres[i];
+                        audioObj.type = 'audio/mpeg';
 
-		init(); 
-		setFondo(0);
-		//rotarFondo();
-        /*var timer=setInterval( function(){
-        			    rotarFondo();
-		}, 60*1000);*/
-       </script>                  
-       <div style="color:white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; font-weight:bold; font-family:'Times'; font-weight: bold; font-size: .8em; margin-top:5em;">*La percusión se agregó desde recortes de youtube, <br>no encajan, pero suman algo para acompañar este momento de pandemia.<br><br>Tomen los recaudos más extremos que puedan, <br>
-       pronto volveremos, <br> al olvido.</div>
-       
+                        div.appendChild(audioObj);
+                        divGeneral.appendChild(div);
+
+                        if (i < nombres.length - 1) {
+                            audioObj.onended = function () {
+                                setFondo(k);
+                                document.getElementById('au' + (k + 1)).play();
+                            };
+                        }
+                        audios[i] = audioObj;
+                        audioObj.onplay = function () {
+                            console.log(i);
+                            setFondo(i);
+                            for (index = 0; index < audios.length; index++) {
+                                if (index != i) {
+                                    audios[index].pause();
+                                    audios[index].currentTime = 0;
+                                }
+                            }
+                        };
+                    }
+                    document.getElementById("TierraMedia").appendChild(divGeneral);
+                }
+
+                function setFondo(fondo) {
+                    document.body.style.backgroundImage = "url('img/fondo" + fondo + ".jpg')";
+                }
+
+                function rotarFondo() {
+                    fondo = (fondo + 1) % 7;
+                    setFondo(f);
+                }
+
+                init();
+                setFondo(0);
+                //rotarFondo();
+                /*var timer=setInterval( function(){
+                 rotarFondo();
+                 }, 60*1000);*/
+            </script>                  
+            <div style="color:white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; font-weight:bold; font-family:'Times'; font-weight: bold; font-size: .8em; margin-top:5em;">*La percusión se agregó desde recortes de youtube, <br>no encajan, pero suman algo para acompañar este momento de pandemia.<br><br>Tomen los recaudos más extremos que puedan, <br>
+                pronto volveremos, <br> al olvido.</div>
+
         </div>
     </body>
 </html>
-
