@@ -6,7 +6,7 @@
         <style>
             @font-face {
                 font-family: 'ringFont';
-                src: url('img/RingbearerMedium-w173.ttf');                	                
+                src: url('img/RingbearerMedium-w173.ttf');                                  
             }
             @font-face {
                 font-family: 'hobbitFont';
@@ -16,7 +16,7 @@
                 font-family: 'bilboFont';
                 src: url('img/BilboHandRegular-L3MZ.ttf');
             }
-            body{           		
+            body{                   
                 background: #2d2d2d;
                 text-align: center;                                                              
                 /*background-image:url('img/fondo0.jpg');*/
@@ -48,54 +48,23 @@
             .titulos{
                 font-size: 1.35em; /* tamaño letra*/
                 font-weight: bold;
-                font-family:'hobbitFont';             			
-                color: palegoldenrod;            	
+                font-family:'hobbitFont';                       
+                color: palegoldenrod;               
                 text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
             }
             audio::-webkit-media-controls-panel, video::-webkit-media-controls-panel {
                 background-color: #777;
                 border:none;
-                border-radius: 0px;			    
-            }			
-            audio {			
+                border-radius: 0px;             
+            }           
+            audio {         
                 background-color: #777;
                 border:none;
                 border-radius: 0px;
             }
             </style>
 
-            <!-- ZONA WAIT LOAD -->
-            <style>
-            #loadDiv {    
-                left: 50%;    
-                margin-top: auto; 
-                margin-left: auto;    
-                position:absolute;
-                top:40%;    
-                margin-right:auto; 
-                left:0;
-                right:0;        
-            }
-            .gif{                      
-              background-image = url('img/wait.gif');
-              text-align: center;
-            }                    
-            </style>
-            <script>
-            function waitLoad(){                       
-                setTimeout(function(){                            
-                    document.getElementById("loadDiv").style.visibility = "visible";
-                    document.getElementById("loadDiv").style.display = "";
-                },10);
-            }
-            waitLoad();
-            function waitLoadDone(){                                           
-               document.getElementById("loadDiv").style.visibility = "hidden";
-               document.getElementById("loadDiv").style.display = "none";                       
-            }                            
-            </script>
-          <!--FIN ZONA WAIT LOAD -->
-
+           
         <script>
             var nombres = Array();
             nombres[0] = "El mundo es feliz-último ensayo 2006.mp3"
@@ -120,18 +89,57 @@
         <link rel="shortcut icon" href="img/favicon.png">
         <title>Los Topes</title>
     </head>    
-    <body>        
-	<div id="loadDiv">                      
-            <div class="gif">                                                      
-            </div>            
-        </div>    
-        <div  id="TierraMedia"  onclick="decirPalabra();">     	    	
-            <div class="lordof" style="position: relative; font-family:'ringFont'; font-size: 2.6em;">Los Topes</div>        
-            <div class="lordof" style="position: relative; font-family:'bilboFont'; font-weight: bold; font-size: 2.2em; margin-bottom: .5em;">Grabaciones antiguas</div>              	                
+    <body>       
+
+          <!-- ZONA WAIT LOAD -->
+            <style>
+            #loadDiv {    
+                left: 50%;    
+                margin-top: auto; 
+                margin-left: auto;    
+                position:absolute;
+                top:40%;    
+                margin-right:auto; 
+                left:0;
+                right:0;        
+            }
+            .gif{            
+              margin: 0 auto;
+              width: 50px;              
+              height: 70px;
+              background-image:url('img/wait.gif');              
+              background-repeat:no-repeat;
+              text-align: center;
+            }                    
+            </style>
             
-	    <div id="lista">
+            <div id="loadDiv">                      
+              <div class="gif">                                                      
+              </div>            
+            </div>
+
+            <script>
+            function waitLoad(idToHide){                                       
+                    document.getElementById(idToHide).style.display = "none";
+                    document.getElementById("loadDiv").style.visibility = "visible";
+                    document.getElementById("loadDiv").style.display = "";                
+            }            
+            function waitLoadDone(idToShow){                                           
+               document.getElementById("loadDiv").style.visibility = "hidden";
+               document.getElementById("loadDiv").style.display = "none";                       
+               document.getElementById(idToShow).style.display = "";
+            }                            
+            </script>
+          <!--FIN ZONA WAIT LOAD --> 
+
+        <div id="TierraMedia"  onclick="decirPalabra();">  
+            <script> waitLoad("TierraMedia");</script>
+            <div class="lordof" style="position: relative; font-family:'ringFont'; font-size: 2.6em;">Los Topes</div>        
+            <div class="lordof" style="position: relative; font-family:'bilboFont'; font-weight: bold; font-size: 2.2em; margin-bottom: .5em;">Grabaciones antiguas</div>                               
+            
+            <div id="lista">
             </div>  
-		
+        
             <script>
                 function init() {
                     var divGeneral = document.getElementById("lista");
@@ -141,7 +149,7 @@
                         //titulo o link
                         let titulo = document.createElement("span");
                         titulo.className = "titulos";
-                        //titulo.style.textAlign="left";         	
+                        //titulo.style.textAlign="left";            
                         titulo.id = "link" + k
                         titulo.href = ""
                         titulo.innerHTML = nombres[i].replace(/.mp3/, '');
@@ -151,7 +159,7 @@
                         let div = document.createElement("div");
                         div.style.marginBottom = "1.2em";
                         div.style.marginTop = "-1.5em";  //para corregir problema/error de "hobbitFont"
-			    
+                
                         //audio
                         let audioObj = document.createElement("audio");
                         audioObj.id = 'au' + k;
@@ -195,12 +203,13 @@
                 }
 
                 init();
-                setFondo(0);
+                
                 //rotarFondo();
                 /*var timer=setInterval( function(){
                  rotarFondo();
                  }, 60*1000);*/
-                 waitLoadDone();
+                setFondo(0);
+                waitLoadDone("TierraMedia");                
             </script>                  
             <div style="color:white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; font-weight:bold; font-family:'Times'; font-weight: bold; font-size: .8em; margin-top:5em;">*La percusión se agregó desde recortes de youtube, <br>no encajan, pero suman algo para acompañar este momento de pandemia.<br><br>Tomen los recaudos más extremos que puedan, <br>
                 pronto volveremos, <br> al olvido.</div>
