@@ -78,18 +78,18 @@
 
             var images = [];
 
-            function preload() {
+            function preloadIMG() {
                 for (var i = 0; i < nombres.length; i++) {
                     images[i] = new Image();
                     images[i].src = 'img/fondo' + i + '.jpg';
                 }
             }
-            preload();
+            
         </script>
         <link rel="shortcut icon" href="img/favicon.png">
         <title>Los Topes</title>
     </head>    
-    <body>       
+    <body onload="setTimeout(preloadIMG, 100);finish();">        
 
           <!-- ZONA WAIT LOAD -->
             <style>
@@ -214,10 +214,12 @@
 
         </div>
         <script>
-            setTimeout( function(){
-            setFondo(0);
-            waitLoadDone("TierraMedia");
-        }, 3000);
+            function finish(){
+                setTimeout( function(){
+                setFondo(0);
+                waitLoadDone("TierraMedia");
+            }, 100);
+        }
         </script>             
     </body>
 </html>
