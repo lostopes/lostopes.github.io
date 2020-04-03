@@ -62,8 +62,45 @@
                 border:none;
                 border-radius: 0px;
             }
+            </style>
 
-        </style>
+            <!-- ZONA WAIT LOAD -->
+            <style>
+            #loadDiv {    
+                left: 50%;    
+                margin-top: auto; 
+                margin-left: auto;    
+                position:absolute;
+                top:40%;    
+                margin-right:auto; 
+                left:0;
+                right:0;        
+            }
+            .gif{                      
+              background-image = url('img/wait.gif');
+              text-align: center;
+            }                    
+            </style>
+            
+            <div id="loadDiv">                      
+              <div class="gif">                                                      
+              </div>            
+            </div>
+
+            <script>
+            function waitLoad(){                       
+                setTimeout(function(){                            
+                    document.getElementById("loadDiv").style.visibility = "visible";
+                    document.getElementById("loadDiv").style.display = "";
+                },10);
+            }
+            waitLoad();
+            function waitLoadDone(){                                           
+               document.getElementById("loadDiv").style.visibility = "hidden";
+               document.getElementById("loadDiv").style.display = "none";                       
+            }                            
+            </script>
+          <!--FIN ZONA WAIT LOAD -->
 
         <script>
             var nombres = Array();
@@ -165,6 +202,7 @@
                 /*var timer=setInterval( function(){
                  rotarFondo();
                  }, 60*1000);*/
+                 waitLoadDone();
             </script>                  
             <div style="color:white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; font-weight:bold; font-family:'Times'; font-weight: bold; font-size: .8em; margin-top:5em;">*La percusión se agregó desde recortes de youtube, <br>no encajan, pero suman algo para acompañar este momento de pandemia.<br><br>Tomen los recaudos más extremos que puedan, <br>
                 pronto volveremos, <br> al olvido.</div>
