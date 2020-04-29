@@ -1,0 +1,90 @@
+@font-face {
+    font-family: 'ringFont';
+    src: url('../img/RingbearerMedium-w173.ttf');
+}
+
+@font-face {
+    font-family: 'hobbitFont';
+    src: url('../img/HobbitonHandscrawlRegular-eZA3.ttf');
+}
+
+@font-face {
+    font-family: 'bilboFont';
+    src: url('../img/BilboHandRegular-L3MZ.ttf');
+}
+
+body {
+    background: #2d2d2d;
+    text-align: center;
+    /*background-image:url('img/fondo0.jpg');*/
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+.reproductor {
+    width: 75%;
+    height: 2.1em;
+}
+
+.lordof {
+    color: gold;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.title1 {
+    position: relative;
+    font-family: 'ringFont';
+    font-size: 2.6em;
+}
+
+.title2 {
+    position: relative;
+    font-family: 'bilboFont';
+    font-weight: bold;
+    font-size: 2.2em;
+    margin-bottom: .5em;
+}
+
+.titulos {
+    font-size: 1.35em;
+    /* tamaño letra*/
+    font-weight: bold;
+    font-family: 'hobbitFont';
+    color: palegoldenrod;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+audio::-webkit-media-controls-panel, video::-webkit-media-controls-panel {
+    background-color: #777;
+    border: none;
+    border-radius: 0px;
+}
+
+audio {
+    background-color: #777;
+    border: none;
+    border-radius: 0px;
+}
+
+.disclaimer {
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-weight: bold;
+    font-family: 'Times';
+    font-weight: bold;
+    font-size: .8em;
+    margin-top: 5em;
+}
