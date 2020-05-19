@@ -10,8 +10,9 @@ var fondo = 0;//Math.floor(Math.random() * (nombres.length - 1));
 
 var images = [];
 
-function preloadIMG() {
-    for (var i = 0; i < nombres.length; i++) {
+function preloadIMG(from=0, to=nombres.length) {
+    
+    for (var i = from; i < to; i++) {
         images[i] = new Image();
         images[i].src = 'img/fondo' + i + '.jpg';
     }

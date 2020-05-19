@@ -15,7 +15,7 @@
     
 </head>
 
-<body onload="setTimeout(finish, 100);">
+<body onload="setTimeout(finish, 100);preloadIMG(1); ">
     <!-- ZONA WAIT LOAD -->  
     <div id="loadDiv">
         <div class="gif">
@@ -27,7 +27,7 @@
     <div id="TierraMedia" onclick="decirPalabra();" style="display: none;">
         <script> 
             waitLoad("TierraMedia");             
-            preloadIMG(); 
+            preloadIMG(0,1); 
         </script> 
         
         <div class="lordof title1">Los Topes</div>
