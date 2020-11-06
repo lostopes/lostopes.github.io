@@ -1,8 +1,8 @@
 var nombres = Array();
 nombres[0] = "Zampando tortas-2003.mp3"
-nombres[1] = "El mundo es feliz-último ensayo 2006.mp3"            
-nombres[2] = "Topes-única demo 2004.mp3"
-nombres[3] = "Hobbits-último ensayo 2006.mp3"
+nombres[1] = "Topes-única demo 2004.mp3"
+nombres[2] = "Hobbits-último ensayo 2006.mp3"
+nombres[3] = "El mundo es feliz-último ensayo 2006.mp3"            
 nombres[4] = "Gandaralf-2003.mp3"
 nombres[5] = "Boromir-2003.mp3"
 var fondo = 0;//Math.floor(Math.random() * (nombres.length - 1));
