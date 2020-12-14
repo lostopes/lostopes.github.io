@@ -5,6 +5,29 @@ nombres[2] = "Hobbits-último ensayo 2006.mp3"
 nombres[3] = "El mundo es feliz-último ensayo 2006.mp3"            
 nombres[4] = "Gandaralf-2003.mp3"
 nombres[5] = "Boromir-2003.mp3"
+
+var urlDescentralizada=Array();
+
+//zampando
+urlDescentralizada[0]="https://siasky.net/_AzNXTJ2PmDODBz0UBMQk0BcGBdpqy5DmfkYzd33aANHyQ";
+//topes
+urlDescentralizada[1]="https://siasky.net/AACAXAG2BZUWgEh0rpdR2-mwO84W1gF67cCEA5QPRP-Feg";
+//hobbits
+urlDescentralizada[2]="https://siasky.net/fAfXKQx6YHbIU9brlltuKU6l2lNULzrTZFa16j0vIw6h-A";
+
+//mundo e feli
+urlDescentralizada[3]="https://siasky.net/AABcJ-7anXiALNuTXa9R2sjSfMrkbCc4ynO4637_ijly8g";
+
+//gandaralf
+urlDescentralizada[4]="https://siasky.net/_AYVhq5bXUXXlCBBl136gnImC_R8uUyTxJB3hzrtGjUHtQ";
+
+//boromir
+urlDescentralizada[5]="https://siasky.net/_AlZlTHQ4FnpaTp0wpNxdzHb0qxMHUz66g1IiHDBDvks1w";
+
+
+
+
+
 var fondo = 0;//Math.floor(Math.random() * (nombres.length - 1));
 
 
@@ -57,7 +80,8 @@ function init() {
         audioObj.controls = 'controls';
         audioObj.className = "reproductor";
         audioObj.autobuffer = "autobuffer";
-        audioObj.src = 'mp3/' + nombres[i];
+        //audioObj.src = 'mp3/' + nombres[i];
+        audioObj.src = urlDescentralizada[i];
         audioObj.type = 'audio/mpeg';
 
         div.appendChild(audioObj);
