@@ -6,6 +6,7 @@ nombres[3] = "El mundo es feliz-último ensayo 2006.mp3"
 nombres[4] = "Gandaralf-2003.mp3"
 nombres[5] = "Boromir-2003.mp3"
 
+/*
 var urlDescentralizada=Array();
 
 //zampando
@@ -23,7 +24,7 @@ urlDescentralizada[4]="https://siasky.net/_AYVhq5bXUXXlCBBl136gnImC_R8uUyTxJB3hz
 
 //boromir
 urlDescentralizada[5]="https://siasky.net/_AlZlTHQ4FnpaTp0wpNxdzHb0qxMHUz66g1IiHDBDvks1w";
-
+*/
 
 
 
@@ -80,8 +81,8 @@ function init() {
         audioObj.controls = 'controls';
         audioObj.className = "reproductor";
         audioObj.autobuffer = "autobuffer";
-        //audioObj.src = 'mp3/' + nombres[i];
-        audioObj.src = urlDescentralizada[i];
+        audioObj.src = 'mp3/' + nombres[i];
+        //audioObj.src = urlDescentralizada[i];
         audioObj.type = 'audio/mpeg';
 
         div.appendChild(audioObj);
