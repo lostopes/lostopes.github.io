@@ -2,60 +2,50 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
 
-        body {
-            margin: 0;
-            font-family: Arial;
-            font-size: 17px;
-            overflow: hidden; /* Prevent scrolling */
-        }
+body {
+  margin: 0;
+  font-family: Arial;
+  font-size: 17px;
+}
 
-        #myVideo {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto; /* Maintain aspect ratio */
-            height: auto; /* Maintain aspect ratio */
-            transform: translate(-50%, -50%); /* Center the video */
-            z-index: -1; /* Send video to background */
-        }
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+}
 
-        .content {
-            position: relative; /* Use relative positioning for content */
-            z-index: 1; /* Bring content above video */
-            background: rgba(0, 0, 0, 0.5);
-            color: #f1f1f1;
-            width: 100%;
-            height: 100%; /* Ensure content covers full height */
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center content vertically */
-            align-items: center; /* Center content horizontally */
-            text-align: center; /* Center text */
-        }
+.content {
+  position: fixed;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+}
 
-        #myBtn {
-            width: 200px;
-            font-size: 18px;
-            padding: 10px;
-            border: none;
-            background: #000;
-            color: #fff;
-            cursor: pointer;
-        }
+#myBtn {
+  width: 200px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+}
 
-        #myBtn:hover {
-            background: #ddd;
-            color: black;
-        }
-    </style>
+#myBtn:hover {
+  background: #ddd;
+  color: black;
+}
+</style>
 </head>
 <body>
 
