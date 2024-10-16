@@ -1,64 +1,68 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-* {
-  box-sizing: border-box;
-}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-body {
-  margin: 0;
-  font-family: Arial;
-  font-size: 17px;
-}
+        body {
+            margin: 0;
+            font-family: Arial;
+            font-size: 17px;
+            overflow: hidden; /* Prevent scrolling */
+        }
 
-#myVideo {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%; 
-  min-height: 100%;
-}
+        #myVideo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto; /* Maintain aspect ratio */
+            height: auto; /* Maintain aspect ratio */
+            transform: translate(-50%, -50%); /* Center the video */
+            z-index: -1; /* Send video to background */
+        }
 
-.content {
-  position: fixed;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  color: #f1f1f1;
-  width: 100%;
-  padding: 20px;
-}
+        .content {
+            position: relative; /* Use relative positioning for content */
+            z-index: 1; /* Bring content above video */
+            background: rgba(0, 0, 0, 0.5);
+            color: #f1f1f1;
+            width: 100%;
+            padding: 20px;
+        }
 
-#myBtn {
-  width: 200px;
-  font-size: 18px;
-  padding: 10px;
-  border: none;
-  background: #000;
-  color: #fff;
-  cursor: pointer;
-}
+        #myBtn {
+            width: 200px;
+            font-size: 18px;
+            padding: 10px;
+            border: none;
+            background: #000;
+            color: #fff;
+            cursor: pointer;
+        }
 
-#myBtn:hover {
-  background: #ddd;
-  color: black;
-}
-</style>
+        #myBtn:hover {
+            background: #ddd;
+            color: black;
+        }
+    </style>
 </head>
 <body>
 
 <video autoplay muted loop id="myVideo">
-  <source src="vecteezy-a-record-player-spinnin.mp4" type="video/mp4">
-  Your browser does not support HTML5 video.
+    <source src="vecteezy-a-record-player-spinnin.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
 </video>
 
 <div class="content">
-  <h1>Heading</h1>
-  <p>Lorem ipsum dolor sit amet, an his etiam torquatos. Tollit soleat phaedrum te duo, eum cu recteque expetendis neglegentur. Cu mentitum maiestatis persequeris pro, pri ponderum tractatos ei. Id qui nemore latine molestiae, ad mutat oblique delicatissimi pro.</p>
-  <button id="myBtn" onclick="myFunction()">Pause</button>
-  <a href="https://www.vecteezy.com/free-videos/vintage-disc">Vintage Disc Stock Videos by Vecteezy</a>
+    <h1>Heading</h1>
+    <p>Lorem ipsum dolor sit amet, an his etiam torquatos. Tollit soleat phaedrum te duo, eum cu recteque expetendis neglegentur. Cu mentitum maiestatis persequeris pro, pri ponderum tractatos ei. Id qui nemore latine molestiae, ad mutat oblique delicatissimi pro.</p>
+    <button id="myBtn" onclick="myFunction()">Pause</button>
+    <a href="https://www.vecteezy.com/free-videos/vintage-disc">Vintage Disc Stock Videos by Vecteezy</a>
 </div>
 
 <script>
@@ -66,16 +70,15 @@ var video = document.getElementById("myVideo");
 var btn = document.getElementById("myBtn");
 
 function myFunction() {
-  if (video.paused) {
-    video.play();
-    btn.innerHTML = "Pause";
-  } else {
-    video.pause();
-    btn.innerHTML = "Play";
-  }
+    if (video.paused) {
+        video.play();
+        btn.innerHTML = "Pause";
+    } else {
+        video.pause();
+        btn.innerHTML = "Play";
+    }
 }
 </script>
 
 </body>
 </html>
-
