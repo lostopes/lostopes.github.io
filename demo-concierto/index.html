@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Los Topes - Set List Concierto</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: 'ringFont','Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: white;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #C76DA3, #6FD8E8);
+      overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      ::-webkit-scrollbar { display: none }
+    }
+
+    body {
+      padding-top: 200px; /* Space for fixed header */
+    }
+
+    /* Use fixed positioning for guaranteed stickiness */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%; 
+      background: linear-gradient(
+        to right, 
+        rgba(240,100,70,0) 0%,       
+        rgba(94,34,66,.8) 50%, 
+        rgba(240,100,70,0) 100%      
+      );
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 9999;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-content {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 10px 0px;
+      text-align: center;
+    }
+    
+    .container {
+      max-width: 420px;
+      margin: 20px auto;
+      padding: 0 16px;
+      position: relative;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, #F5F5F5, #e0e7ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      opacity: 0.8;
+      font-weight: 400;
+    }
+
+    .now-playing-wrapper {
+      min-height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .now-playing-header {
+      text-align: center;      
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-top: 6px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      color: #e0e7ff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    .now-playing-header.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin: 10px 0 0px;
+    }
+
+    .control-btn {
+      background: rgba(255, 55, 55, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .control-btn:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .control-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .play-pause-btn {
+      width: 50px;
+      height: 50px;
+      font-size: 1.2rem;
+    }
+
+    /* Progress bar */
+    .progress-container {
+      width: 100%;
+      max-width: 300px;
+      margin: 10px auto;
+      display: none; /* Hidden until first play */
+    }
+
+    .progress-container.show {
+      display: block;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+      cursor: pointer;
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    .time-display {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      opacity: 0.7;
+    }
+
+    .track-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px 0px;
+      padding-bottom: 20px;
+    }
+
+    .track {      
+      backdrop-filter: blur(10px);      
+      border-radius: 12px;
+      padding: 12px;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .track-list .track:nth-child(odd) {
+      background: rgba(70,30,100,0.65);
+    }
+    .track-list .track:nth-child(even) {
+      background: rgba(70,30,100,0.65); 
+    }
+    .track-list .track.playing {
+      background: rgba(255,120,0,0.5); /* strong orange */
+      border: 2px solid #FF6F00;
+      box-shadow: 0 4px 20px rgba(255,111,0,0.5);
+    }
+    
+    .track-list .track.playing .track-number {
+      background: rgba(255, 255, 255, 0.4);
+      animation: pulse 2s infinite;
+    }
+
+    
+
+    .track-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .track-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .track-info {
+      flex: 1;
+      text-align: left;
+      min-width: 0;
+    }
+
+    .track-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .track-year {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      font-weight: 400;
+    }
+
+    .scroll-indicator {
+      position: fixed;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      z-index: 20;
+    }
+
+    .scroll-thumb {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 2px;
+      transition: all 0.2s ease;
+      min-height: 20px;
+    }
+
+    /* Hidden audio element */
+    #globalAudio {
+      display: none;
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 480px) {
+      body {
+        padding-top: 190px;
+      }
+      
+      .header-content,
+      .container {
+        
+      }
+      
+      .logo {
+        font-size: 1.4rem;
+      }
+      
+      .track {
+        padding: 10px;
+      }
+      
+      .track-header {
+        gap: 10px;
+      }
+      
+      .track-number {
+        width: 22px;
+        height: 22px;
+        font-size: 0.7rem;
+      }
+      
+      .track-title {
+        font-size: 0.85rem;
+      }
+    }
+
+    /* Reduced motion for performance */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo">Los Topes</div>
+      <div class="subtitle">Nada Ha Cambiado en Nuestro Parque</div>
+      <div class="now-playing-wrapper">
+        <div class="now-playing-header" id="nowPlayingHeader"></div>
+      </div>
+      <div class="controls">
+        <div class="control-btn" id="prevBtn">⏮</div>
+        <div class="control-btn play-pause-btn" id="playPauseBtn">▶</div>
+        <div class="control-btn" id="nextBtn">⏭</div>
+      </div>
+      <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="time-display">
+          <span id="currentTime">0:00</span>
+          <span id="duration">0:00</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="track-list" id="trackList"></div>
+    </div>
+  </main>
+
+  <div class="scroll-indicator">
+    <div class="scroll-thumb" id="scrollThumb"></div>
+  </div>
+
+  <!-- Single hidden audio element -->
+  <audio id="globalAudio" preload="none"></audio>
+
+  <script>
+      //  ls *.mp3 | sort -V | sed 's/^/"/;s/$/"/' | paste -sd, -
+    const filesWithEmoji = [
+      { file: "0-Galadriel-LOTR-2003.mp3", emoji: "🧝‍♀️" },
+      { file: "1-Zampando tortas-Los Topes-2003.mp3", emoji: "🍰" },
+      { file: "3-Voy buscando-Nino Bravo-1969.mp3", emoji: "🔍" },
+      { file: "4-Sandra-Los Topes-2018.mp3", emoji: "✌️" },
+      { file: "5-Paraná-Los Topes-2019.mp3", emoji: "🏞️" },
+      { file: "6-Cantares-Serrat-1969.mp3", emoji: "👣" },
+      { file: "7-Manolo-Los Topes-2009.mp3", emoji: "⚽" },
+      { file: "8-Burrito-Los Topes-2020.mp3", emoji: "🐴" },
+      { file: "9-Un Beso Y Una Flor-Nino Bravo-1972.mp3", emoji: "💐" },
+      { file: "10-Animo-Verdulería HyG_Los Topes-2004.mp3", emoji: "⛰️" },
+      { file: "11-Castillos en el aire -Alberto Cortez-1980.mp3", emoji: "🏰" },
+      { file: "12-Hobbits-Los Topes-2003.mp3", emoji: "🧙‍♂️" },
+      { file: "13-Boromir-Los Topes-2003.mp3", emoji: "🛡️" },
+      { file: "14-Legolas-Los Topes-2003.mp3", emoji: "🏹" },
+      { file: "15-Gandaralf-Los Topes-2003.mp3", emoji: "🧙‍♂️" },
+      { file: "16-Trancos-Los Topes-2003.mp3", emoji: "🗡️" },
+      { file: "17-El mason-Los Topes-2025.mp3", emoji: "👁️⃤" },
+      { file: "18-Ahora sí que en la que en una-Los Topes-2003.mp3", emoji: "🎉" },
+      { file: "19-Un Velero Llamado Libertad-Jose Luis Perales-1979.mp3", emoji: "⛵" },
+      { file: "20-intervenir-Los Topes-2016.mp3", emoji: "🎯" },
+      { file: "21-Punk-Los Topes-2001_2020.mp3", emoji: "Ⓐ" },
+      { file: "22-Las golondrinas-Dávalos_Falú(versión Cafrune)-1963.mp3", emoji: "🕊️" },
+      { file: "23-Thunderstruck-AC_DC-1990.mp3", emoji: "⚡" },
+      { file: "24-Somos Topes- Los Topes-2004.mp3", emoji: "👥" },
+      { file: "25-(bis)El mundo es feliz-Los Topes-2003.mp3", emoji: "🌍" },
+      { file: "26-Final campestre-Los Topes-2003.mp3", emoji: "🌾" }
+    ];
+
+    const files = filesWithEmoji.map(item => item.file);
+
+    function getEmojiByName(name) {
+      const item = filesWithEmoji.find(f => f.file.toLowerCase().includes(name.toLowerCase()));
+      return item ? item.emoji : " ";
+    }
+
+    const tracks = files.map(file => {
+      const parts = file.replace(/\.mp3$/, "").split("-").map(p => p.trim());
+      return {
+        title: parts?.[1] || "unknown",
+        author: parts.length > 2 ? parts[parts.length - 2] : "unknown",
+        year: parts.length > 1 ? parts[parts.length - 1] : "unknown",
+        emoji: getEmojiByName(file),
+        link: `https://lostopes.github.io/mp3/setlist/${encodeURIComponent(file)}`
+      };
+    });
+
+    // DOM elements
+    const trackList = document.getElementById('trackList');
+    const nowPlayingHeader = document.getElementById('nowPlayingHeader');
+    const scrollThumb = document.getElementById('scrollThumb');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationEl = document.getElementById('duration');
+    const audio = document.getElementById('globalAudio');
+    
+    let currentTrackIndex = 0;
+
+    // Format time helper
+    function formatTime(seconds) {
+      if (isNaN(seconds)) return '0:00';
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // Update now playing indicator
+    function updateNowPlaying(track) {
+      if (track) {
+        document.title =`${track.emoji} ${track.title}`;
+        nowPlayingHeader.textContent = `${track.emoji} ${track.title} ${track.author} (${track.year}) 🎵`;
+        nowPlayingHeader.classList.add('show');
+        progressContainer.classList.add('show');
+      } else {
+        nowPlayingHeader.classList.remove('show');
+        progressContainer.classList.remove('show');
+      }
+    }
+
+    // Play a specific track
+    function playTrack(index) {
+      if (index < 0 || index >= tracks.length) return;
+      
+      currentTrackIndex = index;
+      const track = tracks[index];
+      
+      // Update audio source
+      audio.src = track.link;
+      audio.load();
+      
+      // Update UI
+      document.querySelectorAll('.track').forEach(t => t.classList.remove('playing'));
+      trackList.children[index].classList.add('playing');
+      updateNowPlaying(track);
+      
+      // Play audio
+      audio.play().catch(console.error);
+    }
+
+    // Toggle play/pause
+    function togglePlayPause() {
+      if (audio.paused) {
+        if (!audio.src) {
+          // No track loaded, start with first track
+          playTrack(0);
+        } else {
+          audio.play().catch(console.error);
+        }
+      } else {
+        audio.pause();
+      }
+    }
+
+    // Navigation functions
+    function playNext() {
+      playTrack((currentTrackIndex + 1) % tracks.length);
+    }
+
+    function playPrev() {
+      playTrack((currentTrackIndex - 1 + tracks.length) % tracks.length);
+    }
+
+    // Create a track element (no audio controls)
+    function createTrackElement(track, index) {
+      const trackElement = document.createElement('div');
+      trackElement.className = 'track';
+
+  
+      trackElement.innerHTML = `
+        <div class="track-header">
+          <div class="track-number"}>${(index + 1).toString().padStart(2, '0')}</div>
+          <div class="track-info">
+            <div class="track-title">${track.title} ${track.emoji}</div>
+            <div class="track-year">${track.author}, ${track.year}</div>
+          </div>
+        </div>
+      `;
+
+      // Click to play track
+      trackElement.addEventListener('click', () => {
+        playTrack(index);
+
+          const star = document.createElement('span');
+          star.textContent = "✨";
+          star.style.position = 'absolute';
+          star.style.left = e.offsetX + 'px';
+          star.style.top = e.offsetY + 'px';
+          this.appendChild(star);
+          setTimeout(() => star.remove(), 1000); // remove after animation
+
+      });
+
+      return trackElement;
+    }
+
+    // Render all tracks
+    function renderTracks() {
+      trackList.innerHTML = '';
+      
+      const fragment = document.createDocumentFragment();
+      
+      tracks.forEach((track, i) => {
+        const trackElement = createTrackElement(track, i);
+        fragment.appendChild(trackElement);
+      });
+
+      trackList.appendChild(fragment);
+      updateScrollIndicator();
+    }
+
+    // Audio event listeners
+    audio.addEventListener('play', () => {
+      playPauseBtn.textContent = "⏸";
+    });
+
+    audio.addEventListener('pause', () => {
+      playPauseBtn.textContent = "▶";
+    });
+
+    audio.addEventListener('ended', () => {
+      playNext();
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        progressFill.style.width = progress + '%';
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+      }
+    });
+
+    // Progress bar click
+    progressBar.addEventListener('click', (e) => {
+      if (audio.duration) {
+        const rect = progressBar.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        audio.currentTime = percent * audio.duration;
+      }
+    });
+
+    // Control button listeners
+    prevBtn.addEventListener('click', playPrev);
+    nextBtn.addEventListener('click', playNext);
+    playPauseBtn.addEventListener('click', togglePlayPause);
+
+    // Scroll indicator
+    let ticking = false;
+    function updateScrollIndicator() {
+      const scrollTop = window.pageYOffset;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = scrollTop / docHeight;
+      const thumbHeight = Math.max(20, 100 * (window.innerHeight / document.documentElement.scrollHeight));
+      
+      scrollThumb.style.height = thumbHeight + 'px';
+      scrollThumb.style.transform = `translateY(${scrollPercent * (100 - thumbHeight)}px)`;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScrollIndicator);
+        ticking = true;
+      }
+    });
+
+    // Initialize
+    renderTracks();
+  </script>
+</body>
+</html>
