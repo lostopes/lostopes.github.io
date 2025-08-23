@@ -527,9 +527,8 @@
       `;
 
       // Click to play track
-      trackElement.addEventListener('click', () => {
+      trackElement.addEventListener('click', (e) => {
         playTrack(index);
-
           const star = document.createElement('span');
           star.textContent = "✨";
           star.style.position = 'absolute';
