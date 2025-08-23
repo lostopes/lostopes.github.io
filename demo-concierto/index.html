@@ -528,18 +528,20 @@
       `;
 
       // Click to play track
-      trackElement.addEventListener('click', (e) => {
-        playTrack(index);
-          const star = document.createElement('span');
-          star.textContent = "✨";
-          star.style.position = 'absolute';
-          star.style.left = e.offsetX + 'px';
-          star.style.top = e.offsetY + 'px';
-          this.appendChild(star);
-          setTimeout(() => star.remove(), 1000); // remove after animation
+        trackElement.addEventListener('click', (e) => {
+      playTrack(index);
 
-      });
+      const star = document.createElement('span');
+      star.textContent = "✨";
+      star.style.position = 'absolute';
+      star.style.left = e.offsetX + 'px';
+      star.style.top = e.offsetY + 'px';
 
+      trackElement.appendChild(star);
+
+      setTimeout(() => star.remove(), 1000);
+    });
+        
       return trackElement;
     }
 
