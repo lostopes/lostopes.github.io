@@ -51,6 +51,7 @@
       z-index: 9999;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transform: translateZ(0);
     }
 
     .header-content {
@@ -195,8 +196,7 @@
       padding-bottom: 20px;
     }
 
-    .track {      
-      backdrop-filter: blur(10px);      
+    .track {     
       border-radius: 12px;
       padding: 12px;
       transition: all 0.2s ease;
@@ -273,7 +273,7 @@
       opacity: 0.7;
       font-weight: 400;
     }
-
+  /*
     .scroll-indicator {
       position: fixed;
       right: 8px;
@@ -292,7 +292,7 @@
       border-radius: 2px;
       transition: all 0.2s ease;
       min-height: 20px;
-    }
+    } */
 
     /* Hidden audio element */
     #globalAudio {
@@ -374,9 +374,7 @@
     </div>
   </main>
 
-  <div class="scroll-indicator">
-    <div class="scroll-thumb" id="scrollThumb"></div>
-  </div>
+
 
   <!-- Single hidden audio element -->
   <audio id="globalAudio" preload="none"></audio>
@@ -600,7 +598,7 @@
     playPauseBtn.addEventListener('click', togglePlayPause);
 
     // Scroll indicator
-    let ticking = false;
+    /* let ticking = false;
     function updateScrollIndicator() {
       const scrollTop = window.pageYOffset;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -618,7 +616,7 @@
         ticking = true;
       }
     });
-
+    */
     // Initialize
     renderTracks();
   </script>
