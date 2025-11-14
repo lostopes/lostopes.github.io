@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Concesionarios de Motos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone@7.28.4/babel.min.js"></script>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-slate-100">
+    <div id="root"></div>
+
+   <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function DealerLocator() {
+            const [dealers, setDealers] = useState([]);
+            const [filtered, setFiltered] = useState([]);
+            const [search, setSearch] = useState('');
+            const [loading, setLoading] = useState(true);
+            const [provinces, setProvinces] = useState([]);
+
+            useEffect(() => {
+                // Cargar CSV directo desde Google Sheets
+                const sheetId = '1uecLsP2pAzX5EjJYsbNswYBaPEX00JuPuibB3Y2ech8';
+                const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+
+                fetch(csvUrl)
+                    .then(res => res.text())
+                    .then(csv => {
+                        const lines = csv.trim().split('\n');
+                        const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+                        
+                        const data = lines.slice(1).map(line => {
+                            const values = line.split(',').map(v => v.trim());
+                            return {
+                                nombre: values[headers.indexOf('nombre')] || '',
+                                provincia: values[headers.indexOf('provincia')] || '',
+                                localidad: values[headers.indexOf('localidad')] || '',
+                                direccion: values[headers.indexOf('direccion')] || '',
+                                telefono: values[headers.indexOf('telefono')] || ''
+                            };
+                        }).filter(d => d.nombre);
+
+                        setDealers(data);
+                        setFiltered(data);
+                        
+                        // Extraer provincias únicas
+                        const uniqueProvinces = [...new Set(data.map(d => d.provincia))].sort();
+                        setProvinces(uniqueProvinces);
+                        setLoading(false);
+                    })
+                    .catch(err => {
+                        console.error('Error cargando datos:', err);
+                        setLoading(false);
+                    });
+            }, []);
+
+            const handleSearch = (value) => {
+                setSearch(value);
+                const query = value.toLowerCase();
+                const results = dealers.filter(d => 
+                    d.provincia.toLowerCase().includes(query) ||
+                    d.localidad.toLowerCase().includes(query) ||
+                    d.nombre.toLowerCase().includes(query)
+                );
+                setFiltered(results);
+            };
+
+            const handleProvinceClick = (province) => {
+                setSearch(province);
+                const results = dealers.filter(d => d.provincia.toLowerCase() === province.toLowerCase());
+                setFiltered(results);
+            };
+
+            return (
+                <div className="min-h-screen py-12 px-4 bg-amber-50">
+                    <div className="max-w-5xl mx-auto">
+                        {/* Header */}
+                        <div className="mb-10">
+                            <h1 className="text-3xl font-semibold text-gray-900 mb-1">Buscador de Concesionarios</h1>
+                            <p className="text-gray-600">Encontrá el concesionario de motos más cercano</p>
+                        </div>
+
+                        {/* Search Input */}
+                        <div className="mb-8">
+                            <input
+                                type="text"
+                                placeholder="Buscar por provincia, localidad o nombre..."
+                                value={search}
+                                onChange={(e) => handleSearch(e.target.value)}
+                                className="w-full px-4 py-3 bg-white border border-gray-300 rounded focus:outline-none focus:border-amber-600"
+                            />
+                        </div>
+
+                        {/* Quick Filter Buttons */}
+                        {provinces.length > 0 && (
+                            <div className="mb-10">
+                                <p className="text-sm text-gray-600 mb-3">Filtrar por provincia</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {provinces.map(prov => (
+                                        <button
+                                            key={prov}
+                                            onClick={() => handleProvinceClick(prov)}
+                                            className="px-3 py-1.5 bg-white border border-gray-300 rounded text-sm hover:border-amber-600 hover:bg-amber-100"
+                                        >
+                                            {prov}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Loading State */}
+                        {loading && (
+                            <div className="text-center py-12">
+                                <p className="text-gray-500">Cargando concesionarios...</p>
+                            </div>
+                        )}
+
+                        {/* Results */}
+                        {!loading && (
+                            <div>
+                                <p className="text-sm text-gray-600 mb-6">
+                                    {filtered.length} {filtered.length === 1 ? 'resultado' : 'resultados'}
+                                </p>
+
+                                {filtered.length === 0 ? (
+                                    <div className="bg-white border border-gray-200 rounded p-8 text-center">
+                                        <p className="text-gray-500">No se encontraron concesionarios</p>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-4">
+                                        {filtered.map((dealer, idx) => (
+                                            <div key={idx} className="bg-white border border-gray-200 rounded p-5">
+                                                <h3 className="text-lg font-medium text-gray-900 mb-3">{dealer.nombre}</h3>
+                                                <div className="space-y-1 text-sm text-gray-600">
+                                                    <p>{dealer.provincia} · {dealer.localidad}</p>
+                                                    <p>{dealer.direccion}</p>
+                                                    {dealer.telefono && (
+                                                        <p>
+                                                            <a href={`tel:${dealer.telefono}`} className="text-amber-700 hover:underline">
+                                                                {dealer.telefono}
+                                                            </a>
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<DealerLocator />, document.getElementById('root'));
+    </script>
+</body>
+</html>
