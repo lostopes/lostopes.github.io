@@ -12,7 +12,7 @@
 <body class="bg-gradient-to-br from-slate-50 to-slate-100">
     <div id="root"></div>
 
-   <script type="text/babel">
+    <script type="text/babel">
         const { useState, useEffect } = React;
 
         function DealerLocator() {
@@ -76,35 +76,35 @@
             };
 
             return (
-                <div className="min-h-screen py-12 px-4 bg-amber-50">
-                    <div className="max-w-5xl mx-auto">
+                <div className="min-h-screen py-8 px-4">
+                    <div className="max-w-6xl mx-auto">
                         {/* Header */}
-                        <div className="mb-10">
-                            <h1 className="text-3xl font-semibold text-gray-900 mb-1">Buscador de Concesionarios</h1>
-                            <p className="text-gray-600">Encontrá el concesionario de motos más cercano</p>
+                        <div className="mb-8">
+                            <h1 className="text-4xl font-bold text-gray-900 mb-2">Buscador de Concesionarios</h1>
+                            <p className="text-lg text-gray-600">Encontrá el concesionario de motos más cercano a ti</p>
                         </div>
 
                         {/* Search Input */}
                         <div className="mb-8">
                             <input
                                 type="text"
-                                placeholder="Buscar por provincia, localidad o nombre..."
+                                placeholder="Busca por provincia, localidad o nombre..."
                                 value={search}
                                 onChange={(e) => handleSearch(e.target.value)}
-                                className="w-full px-4 py-3 bg-white border border-gray-300 rounded focus:outline-none focus:border-amber-600"
+                                className="w-full px-6 py-3 text-lg border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition"
                             />
                         </div>
 
                         {/* Quick Filter Buttons */}
                         {provinces.length > 0 && (
-                            <div className="mb-10">
-                                <p className="text-sm text-gray-600 mb-3">Filtrar por provincia</p>
+                            <div className="mb-8">
+                                <p className="text-sm font-semibold text-gray-700 mb-3">Filtrar por provincia:</p>
                                 <div className="flex flex-wrap gap-2">
                                     {provinces.map(prov => (
                                         <button
                                             key={prov}
                                             onClick={() => handleProvinceClick(prov)}
-                                            className="px-3 py-1.5 bg-white border border-gray-300 rounded text-sm hover:border-amber-600 hover:bg-amber-100"
+                                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium"
                                         >
                                             {prov}
                                         </button>
@@ -116,32 +116,34 @@
                         {/* Loading State */}
                         {loading && (
                             <div className="text-center py-12">
-                                <p className="text-gray-500">Cargando concesionarios...</p>
+                                <p className="text-gray-600 text-lg">Cargando concesionarios...</p>
                             </div>
                         )}
 
                         {/* Results */}
                         {!loading && (
                             <div>
-                                <p className="text-sm text-gray-600 mb-6">
-                                    {filtered.length} {filtered.length === 1 ? 'resultado' : 'resultados'}
+                                <p className="text-gray-700 font-semibold mb-4">
+                                    {filtered.length} {filtered.length === 1 ? 'concesionario encontrado' : 'concesionarios encontrados'}
                                 </p>
 
                                 {filtered.length === 0 ? (
-                                    <div className="bg-white border border-gray-200 rounded p-8 text-center">
-                                        <p className="text-gray-500">No se encontraron concesionarios</p>
+                                    <div className="bg-white rounded-lg p-8 text-center">
+                                        <p className="text-gray-500">No se encontraron concesionarios con esos criterios.</p>
                                     </div>
                                 ) : (
-                                    <div className="space-y-4">
+                                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                                         {filtered.map((dealer, idx) => (
-                                            <div key={idx} className="bg-white border border-gray-200 rounded p-5">
-                                                <h3 className="text-lg font-medium text-gray-900 mb-3">{dealer.nombre}</h3>
-                                                <div className="space-y-1 text-sm text-gray-600">
-                                                    <p>{dealer.provincia} · {dealer.localidad}</p>
-                                                    <p>{dealer.direccion}</p>
+                                            <div key={idx} className="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6">
+                                                <h3 className="text-xl font-bold text-blue-600 mb-2">{dealer.nombre}</h3>
+                                                <div className="space-y-2 text-sm text-gray-700">
+                                                    <p><span className="font-semibold">Provincia:</span> {dealer.provincia}</p>
+                                                    <p><span className="font-semibold">Localidad:</span> {dealer.localidad}</p>
+                                                    <p><span className="font-semibold">Dirección:</span> {dealer.direccion}</p>
                                                     {dealer.telefono && (
                                                         <p>
-                                                            <a href={`tel:${dealer.telefono}`} className="text-amber-700 hover:underline">
+                                                            <span className="font-semibold">Teléfono:</span>{' '}
+                                                            <a href={`tel:${dealer.telefono}`} className="text-blue-600 hover:underline">
                                                                 {dealer.telefono}
                                                             </a>
                                                         </p>
