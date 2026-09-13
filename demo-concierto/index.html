@@ -1,363 +1,325 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Los Topes - Set List Concierto</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#74ACDF">
+  <meta name="description" content="Los Topes - Show Regreso: Nada ha cambiado en nuestro parque. Set list para escuchar.">
+  <title>Los Topes - Show Regreso</title>
+  <link rel="icon" href="../img/favicon.png">
+  <link rel="preload" href="../img/ringbearer-latin.woff2" as="font" type="font/woff2" crossorigin>
   <style>
     @font-face {
       font-family: 'ringFont';
-      src: url('../img/RingbearerMedium-w173.ttf');
+      src: url('../img/ringbearer-latin.woff2') format('woff2'),
+           url('../img/ringbearer-latin.woff') format('woff');
+      font-display: swap;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html, body {
-      font-family: sans-serif;
-      color: white;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #C76DA3, #6FD8E8);
-      overflow-x: hidden;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      ::-webkit-scrollbar { display: none }
+    /* Celeste y blanco: #74ACDF (celeste bandera), texto azul oscuro para legibilidad */
+    html {
+      background: #fff;
+      -webkit-text-size-adjust: 100%;
     }
 
     body {
-      padding-top: 200px; /* Space for fixed header */
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #13304d;
+      background: #fff;
+      padding-top: 230px; /* se ajusta por JS a la altura real del header */
+      overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body::-webkit-scrollbar { display: none; }
+
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: 0;
+      cursor: pointer;
     }
 
-    /* Use fixed positioning for guaranteed stickiness */
+    /* ---------- Header ---------- */
     header {
-      font-family: 'ringFont',sans-serif;
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      width: 100%; 
-      background: linear-gradient(
-        to right, 
-        rgba(240,100,70,0) 0%,       
-        rgba(94,34,66,.8) 50%, 
-        rgba(240,100,70,0) 100%      
-      );
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(10px);
-      z-index: 9999;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      transform: translateZ(0);
+      z-index: 10;
+      background: #74ACDF;
+      border-bottom: 3px solid #fff;
     }
 
     .header-content {
-      max-width: 420px;
+      max-width: 440px;
       margin: 0 auto;
-      padding: 10px 0px;
+      padding: 10px 16px 8px;
       text-align: center;
-    }
-    
-    .container {
-      max-width: 420px;
-      margin: 20px auto;
-      padding: 0 16px;
-      position: relative;
     }
 
     .logo {
-      font-size: 1.6rem;
-      font-weight: 700;
-      background: linear-gradient(45deg, #F5F5F5, #e0e7ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 4px;
-      letter-spacing: -0.01em;
+      font-family: 'ringFont', Georgia, serif;
+      font-size: 1.7rem;
+      line-height: 1.2;
+      color: #fff;
     }
 
     .subtitle {
-      font-size: 1rem;
-      opacity: 0.8;
-      font-weight: 400;
+      font-family: 'ringFont', Georgia, serif;
+      font-size: 0.85rem;
+      margin-top: 2px;
     }
+    .subtitle b { display: block; font-weight: normal; letter-spacing: 0.06em; }
 
-    .now-playing-wrapper {
-      min-height: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .now-playing-header {
-      text-align: center;      
-      font-size: 0.75rem;
-      font-weight: 500;
+    .now-playing {
+      height: 1.6em;
+      line-height: 1.6em;
       margin-top: 6px;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: all 0.3s ease;
-      color: #e0e7ff;
+      font-size: 0.78rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 100%;
+      opacity: 0.75;
     }
+    .now-playing.show { opacity: 1; font-weight: 600; }
 
-    .now-playing-header.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Controls */
     .controls {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 16px;
-      margin: 10px 0 0px;
+      margin-top: 4px;
     }
 
     .control-btn {
-      background: rgba(255, 55, 55, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: white;
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
+      margin: 0 9px;
       border-radius: 50%;
+      background: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
     }
+    .control-btn:active { background: #e3f0fa; }
+    .control-btn svg { width: 18px; height: 18px; fill: #13304d; display: block; }
 
-    .control-btn:hover:not(:disabled) {
-      background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.05);
-    }
+    .play-pause-btn { width: 54px; height: 54px; }
+    .play-pause-btn svg { width: 24px; height: 24px; }
+    .icon-pause { display: none !important; }
+    .is-playing .icon-play { display: none !important; }
+    .is-playing .icon-pause { display: block !important; }
 
-    .control-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
+    /* Progreso: siempre ocupa lugar para que el header no cambie de alto */
+    .progress {
+      max-width: 320px;
+      margin: 8px auto 0;
+      visibility: hidden;
     }
-
-    .play-pause-btn {
-      width: 50px;
-      height: 50px;
-      font-size: 1.2rem;
-    }
-
-    /* Progress bar */
-    .progress-container {
-      width: 100%;
-      max-width: 300px;
-      margin: 10px auto;
-      display: none; /* Hidden until first play */
-    }
-
-    .progress-container.show {
-      display: block;
-    }
+    .progress.show { visibility: visible; }
 
     .progress-bar {
-      width: 100%;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 3px;
-      cursor: pointer;
+      height: 18px; /* zona táctil grande, barra visual fina */
       position: relative;
-      margin-bottom: 8px;
+      cursor: pointer;
     }
-
-    .progress-fill {
-      height: 100%;
-      background: rgba(255, 255, 255, 0.8);
+    .progress-track, .progress-fill {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 6px;
+      height: 6px;
       border-radius: 3px;
-      width: 0%;
-      transition: width 0.1s ease;
+    }
+    .progress-track { background: #b9d6ef; }
+    .progress-fill {
+      background: #fff;
+      -webkit-transform-origin: 0 50%;
+      transform-origin: 0 50%;
+      -webkit-transform: scaleX(0);
+      transform: scaleX(0);
     }
 
     .time-display {
       display: flex;
       justify-content: space-between;
       font-size: 0.7rem;
-      opacity: 0.7;
+      font-variant-numeric: tabular-nums;
     }
 
-    .track-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 10px 0px;
-      padding-bottom: 20px;
+    /* ---------- Lista ---------- */
+    .container {
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 4px 16px 32px;
     }
 
-    .track {     
-      border-radius: 12px;
-      padding: 12px;
-      transition: all 0.2s ease;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      border: 2px solid transparent;
-    }
-
-    .track-list .track:nth-child(odd) {
-      background: rgba(70,30,100,0.65);
-    }
-    .track-list .track:nth-child(even) {
-      background: rgba(70,30,100,0.65); 
-    }
-    .track-list .track.playing {
-      background: rgba(255,120,0,0.5); /* strong orange */
-      border: 2px solid #FF6F00;
-      box-shadow: 0 4px 20px rgba(255,111,0,0.5);
-    }
-    
-    .track-list .track.playing .track-number {
-      background: rgba(255, 255, 255, 0.4);
-      animation: pulse 2s infinite;
-    }
-
-    
-
-    .track-header {
+    .act {
+      font-family: 'ringFont', Georgia, serif;
+      font-size: 1rem;
+      font-weight: normal;
+      color: #3d82bf;
+      text-align: center;
+      margin: 22px 0 10px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 8px;
+    }
+    .act:before, .act:after {
+      content: "";
+      -webkit-box-flex: 1;
+      flex: 1;
+      height: 1px;
+      background: #74ACDF;
+    }
+    .act:before { margin-right: 10px; }
+    .act:after { margin-left: 10px; }
+    .act-note {
+      display: block;
+      font-size: 0.72rem;
+      text-align: center;
+      opacity: 0.7;
+      margin: -6px 0 10px;
     }
 
+    .track {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #fff;
+      border: 2px solid #cfe3f4;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .track:hover { border-color: #74ACDF; }
+    .track.playing { background: #74ACDF; border-color: #74ACDF; }
+    .track.extra { border-style: dashed; }
+
     .track-number {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
+      margin-right: 12px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
+      background: #e3f0fa;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.75rem;
       font-weight: 600;
       flex-shrink: 0;
-      transition: all 0.2s ease;
-    
+      font-variant-numeric: tabular-nums;
     }
-    
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
+    .playing .track-number {
+      background: #fff;
+      -webkit-animation: pulse 2s infinite;
+      animation: pulse 2s infinite;
     }
 
     .track-info {
+      -webkit-box-flex: 1;
       flex: 1;
-      text-align: left;
       min-width: 0;
+      text-align: left;
     }
-
     .track-title {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: 600;
-      margin-bottom: 2px;
-      line-height: 1.2;
+      line-height: 1.25;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
-    .track-year {
-      font-size: 0.75rem;
-      opacity: 0.7;
-      font-weight: 400;
+    .track-meta {
+      font-size: 0.74rem;
+      line-height: 1.3;
+      opacity: 0.75;
+      margin-top: 2px;
     }
-  /*
-    .scroll-indicator {
-      position: fixed;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 3px;
-      height: 100px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 2px;
-      z-index: 20;
+    .track-note {
+      font-size: 0.72rem;
+      font-style: italic;
+      opacity: 0.85;
+      margin-top: 1px;
     }
 
-    .scroll-thumb {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.5);
-      border-radius: 2px;
-      transition: all 0.2s ease;
-      min-height: 20px;
-    } */
+    .badge-new {
+      display: inline-block;
+      vertical-align: 2px;
+      margin-left: 4px;
+      padding: 1px 6px;
+      border-radius: 8px;
+      background: #74ACDF;
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .playing .badge-new { background: #fff; color: #13304d; }
 
-    /* Hidden audio element */
-    #globalAudio {
-      display: none;
+    .key {
+      flex-shrink: 0;
+      margin-left: 10px;
+      padding: 3px 7px;
+      border-radius: 6px;
+      border: 1px solid #74ACDF;
+      font-size: 0.72rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .playing .key { background: #fff; border-color: #fff; }
+
+    .sparkle {
+      position: absolute;
+      pointer-events: none;
+      -webkit-animation: sparkle 0.6s ease-out forwards;
+      animation: sparkle 0.6s ease-out forwards;
     }
 
-    /* Mobile optimizations */
-    @media (max-width: 480px) {
-      body {
-        padding-top: 190px;
-      }
-      
-      .header-content,
-      .container {
-        
-      }
-      
-      .logo {
-        font-size: 1.4rem;
-      }
-      
-      .track {
-        padding: 10px;
-      }
-      
-      .track-header {
-        gap: 10px;
-      }
-      
-      .track-number {
-        width: 22px;
-        height: 22px;
-        font-size: 0.7rem;
-      }
-      
-      .track-title {
-        font-size: 0.85rem;
-      }
+    @-webkit-keyframes pulse { 0%, 100% { -webkit-transform: scale(1); } 50% { -webkit-transform: scale(1.1); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    @-webkit-keyframes sparkle { to { opacity: 0; -webkit-transform: translateY(-14px) scale(1.4); } }
+    @keyframes sparkle { to { opacity: 0; transform: translateY(-14px) scale(1.4); } }
+
+    @media (max-width: 380px) {
+      .logo { font-size: 1.5rem; }
+      .track { padding: 9px 10px; }
+      .track-number { width: 24px; height: 24px; margin-right: 10px; font-size: 0.7rem; }
+      .track-title { font-size: 0.86rem; }
     }
 
-    /* Reduced motion for performance */
     @media (prefers-reduced-motion: reduce) {
-      * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
+      * { -webkit-animation: none !important; animation: none !important; }
     }
   </style>
 </head>
 <body>
-  <header>
+  <header id="header">
     <div class="header-content">
       <div class="logo">Los Topes</div>
-      <div class="subtitle">Nada Ha Cambiado en Nuestro Parque</div>
-      <div class="now-playing-wrapper">
-        <div class="now-playing-header" id="nowPlayingHeader"></div>
-      </div>
+      <div class="subtitle"><b>Show Regreso</b>Nada ha cambiado en nuestro parque</div>
+      <div class="now-playing" id="nowPlaying">Tocá un tema para escuchar</div>
       <div class="controls">
-        <div class="control-btn" id="prevBtn">⏮</div>
-        <div class="control-btn play-pause-btn" id="playPauseBtn">▶</div>
-        <div class="control-btn" id="nextBtn">⏭</div>
+        <button type="button" class="control-btn" id="prevBtn" aria-label="Anterior">
+          <svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg>
+        </button>
+        <button type="button" class="control-btn play-pause-btn" id="playPauseBtn" aria-label="Reproducir / pausar">
+          <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+        </button>
+        <button type="button" class="control-btn" id="nextBtn" aria-label="Siguiente">
+          <svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg>
+        </button>
       </div>
-      <div class="progress-container" id="progressContainer">
+      <div class="progress" id="progress">
         <div class="progress-bar" id="progressBar">
+          <div class="progress-track"></div>
           <div class="progress-fill" id="progressFill"></div>
         </div>
         <div class="time-display">
@@ -368,257 +330,257 @@
     </div>
   </header>
 
-  <main>
-    <div class="container">
-      <div class="track-list" id="trackList"></div>
-    </div>
-  </main>
+  <main class="container" id="trackList"></main>
 
-
-
-  <!-- Single hidden audio element -->
   <audio id="globalAudio" preload="none"></audio>
 
   <script>
-      //  ls *.mp3 | sort -V | sed 's/^/"/;s/$/"/' | paste -sd, -
-    const filesWithEmoji = [
-      { file: "0-Galadriel-LOTR-2003.mp3", emoji: "🧝‍♀️" },
-      { file: "1-Zampando tortas-Los Topes-2003.mp3", emoji: "🍰" },
-      { file: "2-Hoy 2006-Los Topes-2006.mp3", emoji: "🌞" },      
-      { file: "3-Voy buscando-Nino Bravo-1969.mp3", emoji: "🔍" },
-      { file: "4-Sandra-Los Topes-2018.mp3", emoji: "✌️" },
-      { file: "5-Paraná-Los Topes-2019.mp3", emoji: "🏞️" },
-      { file: "6-Cantares-Serrat-1969.mp3", emoji: "👣" },
-      { file: "7-Manolo-Los Topes-2009.mp3", emoji: "⚽" },
-      { file: "8-Burrito-Los Topes-2020.mp3", emoji: "🐴" },
-      { file: "9-Un Beso Y Una Flor-Nino Bravo-1972.mp3", emoji: "💐" },
-      { file: "10-Animo-Verdulería HyC_Los Topes-2004.mp3", emoji: "⛰️" },
-      { file: "11-Castillos en el aire -Alberto Cortez-1980.mp3", emoji: "🏰" },
-      { file: "12-Hobbits-Los Topes-2003.mp3", emoji: "🧙‍♂️" },
-      { file: "13-Boromir-Los Topes-2003.mp3", emoji: "🛡️" },
-      { file: "14-Legolas-Los Topes-2003.mp3", emoji: "🏹" },
-      { file: "15-Gandaralf-Los Topes-2003.mp3", emoji: "🧙‍♂️" },
-      { file: "16-Trancos-Los Topes-2003.mp3", emoji: "🗡️" },
-      { file: "17-El mason-Los Topes-2025.mp3", emoji: "👁️⃤" },
-      { file: "18-Ahora sí que en la que en una-Los Topes-2003.mp3", emoji: "🎉" },
-      { file: "19-Un Velero Llamado Libertad-Jose Luis Perales-1979.mp3", emoji: "⛵" },
-      { file: "20-intervenir-Los Topes-2016.mp3", emoji: "🎯" },
-      { file: "21-Punk-Los Topes-2001_2020.mp3", emoji: "Ⓐ" },
-      { file: "22-Las golondrinas-Dávalos_Falú(versión Cafrune)-1963.mp3", emoji: "🕊️" },
-      { file: "23-Thunderstruck-AC_DC-1990.mp3", emoji: "⚡" },
-      { file: "24-Somos Topes- Los Topes-2004.mp3", emoji: "👥" },
-      { file: "25-(bis)El mundo es feliz-Los Topes-2003.mp3", emoji: "🌍" },
-      { file: "26-Final campestre-Los Topes-2003.mp3", emoji: "🌾" }
+  (function () {
+    // n: número en la lista del show | k: tonalidad | nuevo: tema nuevo en el show
+    var sections = [
+      { name: "Primer acto", tracks: [
+        { n: 1,  t: "Zampando tortas", a: "Los Topes", y: "2003", k: "D#Δ/G", e: "🍰", f: "1-Zampando tortas-Los Topes-2003.mp3" },
+        { n: 2,  t: "Hoy 2006", a: "Los Topes", y: "2006", k: "F", e: "🌞", note: "Con intro de «Noelia»", f: "2-Hoy 2006-Los Topes-2006.mp3" },
+        { n: 3,  t: "Voy buscando", a: "Nino Bravo", y: "1969", k: "E", e: "🔍", f: "3-Voy buscando-Nino Bravo-1969.mp3" },
+        { n: 4,  t: "Sandra", a: "Los Topes", y: "2018", k: "C", e: "✌️", nuevo: true, f: "4-Sandra-Los Topes-2018.mp3" }
+      ]},
+      { name: "Segundo acto", tracks: [
+        { n: 5,  t: "Paraná", a: "Los Topes", y: "2019", k: "A", e: "🏞️", nuevo: true, f: "5-Paraná-Los Topes-2019.mp3" },
+        { n: 7,  t: "Manolo", a: "Los Topes", y: "2009", k: "G", e: "⚽", nuevo: true, f: "7-Manolo-Los Topes-2009.mp3" },
+        { n: 10, t: "Un beso y una flor", a: "Nino Bravo", y: "1972", k: "E", e: "💐", f: "9-Un Beso Y Una Flor-Nino Bravo-1972.mp3" },
+        { n: 11, t: "Ánimo", a: "Verdulería Hugo y Cristina / Los Topes", y: "2004", k: "Em", e: "⛰️", f: "10-Animo-Verdulería HyC_Los Topes-2004.mp3" },
+        { n: 12, t: "Castillos en el aire", a: "Alberto Cortez", y: "1980", k: "Fm", e: "🏰", f: "11-Castillos en el aire -Alberto Cortez-1980.mp3" }
+      ]},
+      { name: "Tercer acto · Era Tolkien", tracks: [
+        { n: 13, t: "Hobbits", a: "Los Topes", y: "2003", k: "CΔ/G → F#", e: "🧙‍♂️", f: "12-Hobbits-Los Topes-2003.mp3" },
+        { n: 14, t: "Legolas", a: "Los Topes", y: "2003", k: "C → F#", e: "🏹", f: "14-Legolas-Los Topes-2003.mp3" },
+        { n: 15, t: "Boromir", a: "Los Topes", y: "2003", k: "A", e: "🛡️", f: "13-Boromir-Los Topes-2003.mp3" },
+        { n: 16, t: "Trancos", a: "Los Topes", y: "2003", k: "F → F#", e: "🗡️", f: "16-Trancos-Los Topes-2003.mp3" },
+        { n: 17, t: "Gandaralf", a: "Los Topes", y: "2003", k: "E → F#m", e: "🧙‍♂️", f: "15-Gandaralf-Los Topes-2003.mp3" }
+      ]},
+      { name: "Cierre", tracks: [
+        { n: 18, t: "El masón", a: "Los Topes", y: "2025", k: "E → A", e: "📐", nuevo: true, f: "17-El mason-Los Topes-2025.mp3" },
+        { n: 19, t: "Un velero llamado libertad", a: "José Luis Perales", y: "1979", k: "E", e: "⛵", f: "19-Un Velero Llamado Libertad-Jose Luis Perales-1979.mp3" },
+        { n: 20, t: "Intervenir", a: "Los Topes", y: "2016", k: "C", e: "🎯", nuevo: true, f: "20-intervenir-Los Topes-2016.mp3" },
+        { n: 21, t: "Punk", a: "Los Topes", y: "2001/2020", k: "C", e: "Ⓐ", nuevo: true, f: "21-Punk-Los Topes-2001_2020.mp3" },
+        { n: 22, t: "Las golondrinas", a: "Dávalos/Falú (versión Cafrune)", y: "1963", k: "intro A → D", e: "🕊️", f: "22-Las golondrinas-Dávalos_Falú(versión Cafrune)-1963.mp3" },
+        { n: 23, t: "Somos Topes", a: "Los Topes", y: "2004", k: "G", e: "👥", f: "24-Somos Topes- Los Topes-2004.mp3" }
+      ]},
+      { name: "Posible bis", tracks: [
+        { n: 24, t: "El mundo es feliz", a: "Los Topes", y: "2003", k: "C", e: "🌍", f: "25-(bis)El mundo es feliz-Los Topes-2003.mp3" }
+      ]},
+      { name: "Final", tracks: [
+        { n: 25, t: "Campestre", a: "Los Topes", y: "2003", k: "Am", e: "🌾", note: "Instrumental + despedida", f: "26-Final campestre-Los Topes-2003.mp3" }
+      ]},
+      { name: "Extras", note: "Grabaciones que no están en la lista del show", extra: true, tracks: [
+        { t: "Thunderstruck", a: "AC/DC", y: "1990", e: "⚡", note: "¿Cover en inglés?", f: "23-Thunderstruck-AC_DC-1990.mp3" },
+        { t: "Burrito", a: "Los Topes", y: "2020", e: "🐴", f: "8-Burrito-Los Topes-2020.mp3" },
+        { t: "Ahora sí que en la que en una", a: "Los Topes", y: "2003", e: "🎉", f: "18-Ahora sí que en la que en una-Los Topes-2003.mp3" }
+      ]}
     ];
 
-    const files = filesWithEmoji.map(item => item.file);
+    var BASE = "../mp3/setlist/";
+    var tracks = [];
+    var rowEls = [];
+    var current = -1;
 
-    function getEmojiByName(name) {
-      const item = filesWithEmoji.find(f => f.file.toLowerCase().includes(name.toLowerCase()));
-      return item ? item.emoji : " ";
+    var $ = function (id) { return document.getElementById(id); };
+    var header = $("header");
+    var list = $("trackList");
+    var nowPlaying = $("nowPlaying");
+    var playPauseBtn = $("playPauseBtn");
+    var progress = $("progress");
+    var progressBar = $("progressBar");
+    var progressFill = $("progressFill");
+    var currentTimeEl = $("currentTime");
+    var durationEl = $("duration");
+    var audio = $("globalAudio");
+
+    function pad2(x) { return x < 10 ? "0" + x : "" + x; }
+
+    function formatTime(s) {
+      if (!isFinite(s) || s < 0) return "0:00";
+      return Math.floor(s / 60) + ":" + pad2(Math.floor(s % 60));
     }
 
-    const tracks = files.map(file => {
-      const parts = file.replace(/\.mp3$/, "").split("-").map(p => p.trim());
-      return {
-        title: parts?.[1] || "unknown",
-        author: parts.length > 2 ? parts[parts.length - 2] : "unknown",
-        year: parts.length > 1 ? parts[parts.length - 1] : "unknown",
-        emoji: getEmojiByName(file),
-        link: `https://lostopes.github.io/mp3/setlist/${encodeURIComponent(file)}`
-      };
-    });
-
-    // DOM elements
-    const trackList = document.getElementById('trackList');
-    const nowPlayingHeader = document.getElementById('nowPlayingHeader');
-    const scrollThumb = document.getElementById('scrollThumb');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const playPauseBtn = document.getElementById('playPauseBtn');
-    const progressContainer = document.getElementById('progressContainer');
-    const progressBar = document.getElementById('progressBar');
-    const progressFill = document.getElementById('progressFill');
-    const currentTimeEl = document.getElementById('currentTime');
-    const durationEl = document.getElementById('duration');
-    const audio = document.getElementById('globalAudio');
-    
-    let currentTrackIndex = 0;
-
-    // Format time helper
-    function formatTime(seconds) {
-      if (isNaN(seconds)) return '0:00';
-      const mins = Math.floor(seconds / 60);
-      const secs = Math.floor(seconds % 60);
-      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    function esc(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
-    // Update now playing indicator
-    function updateNowPlaying(track) {
-      if (track) {
-        document.title =`${track.emoji} ${track.title}`;
-        nowPlayingHeader.textContent = `${track.emoji} ${track.title} ${track.author} (${track.year}) 🎵`;
-        nowPlayingHeader.classList.add('show');
-        progressContainer.classList.add('show');
-      } else {
-        nowPlayingHeader.classList.remove('show');
-        progressContainer.classList.remove('show');
-      }
-    }
-
-    // Play a specific track
-    function playTrack(index) {
-      if (index < 0 || index >= tracks.length) return;
-      
-      currentTrackIndex = index;
-      const track = tracks[index];
-      
-      // Update audio source
-      audio.src = track.link;
-      audio.load();
-      
-      // Update UI
-      document.querySelectorAll('.track').forEach(t => t.classList.remove('playing'));
-      trackList.children[index].classList.add('playing');
-      updateNowPlaying(track);
-      
-      // Play audio
-      audio.play().catch(console.error);
-    }
-
-    // Toggle play/pause
-    function togglePlayPause() {
-      if (audio.paused) {
-        if (!audio.src) {
-          // No track loaded, start with first track
-          playTrack(0);
-        } else {
-          audio.play().catch(console.error);
+    function render() {
+      var html = [];
+      for (var s = 0; s < sections.length; s++) {
+        var sec = sections[s];
+        html.push('<h2 class="act">' + esc(sec.name) + '</h2>');
+        if (sec.note) html.push('<span class="act-note">' + esc(sec.note) + '</span>');
+        for (var j = 0; j < sec.tracks.length; j++) {
+          var tr = sec.tracks[j];
+          var i = tracks.length;
+          tracks.push(tr);
+          html.push(
+            '<div class="track' + (sec.extra ? ' extra' : '') + '" data-i="' + i + '" role="button" tabindex="0">' +
+              '<div class="track-number">' + (tr.n ? pad2(tr.n) : '·') + '</div>' +
+              '<div class="track-info">' +
+                '<div class="track-title">' + esc(tr.t) + ' ' + tr.e +
+                  (tr.nuevo ? '<span class="badge-new">nuevo</span>' : '') + '</div>' +
+                '<div class="track-meta">' + esc(tr.a) + ' · ' + esc(tr.y) + '</div>' +
+                (tr.note ? '<div class="track-note">' + esc(tr.note) + '</div>' : '') +
+              '</div>' +
+              (tr.k ? '<span class="key" title="Tonalidad">' + esc(tr.k) + '</span>' : '') +
+            '</div>'
+          );
         }
-      } else {
-        audio.pause();
+      }
+      list.innerHTML = html.join("");
+      var nodes = list.getElementsByTagName("div");
+      for (var n = 0; n < nodes.length; n++) {
+        if (nodes[n].className.indexOf("track") === 0 && nodes[n].getAttribute("data-i") !== null) {
+          rowEls[+nodes[n].getAttribute("data-i")] = nodes[n];
+        }
       }
     }
 
-    // Navigation functions
-    function playNext() {
-      playTrack((currentTrackIndex + 1) % tracks.length);
+    function fitHeader() {
+      document.body.style.paddingTop = header.offsetHeight + "px";
     }
 
+    function safePlay() {
+      var p = audio.play();
+      if (p && typeof p.then === "function") p.then(null, function () {});
+    }
+
+    function updateMediaSession(tr) {
+      if (!("mediaSession" in navigator) || typeof MediaMetadata === "undefined") return;
+      try {
+        navigator.mediaSession.metadata = new MediaMetadata({ title: tr.t, artist: tr.a, album: "Los Topes - Show Regreso" });
+      } catch (e) {}
+    }
+
+    function scrollToRow(el) {
+      var r = el.getBoundingClientRect();
+      var top = header.offsetHeight;
+      if (r.top < top || r.bottom > (window.innerHeight || document.documentElement.clientHeight)) {
+        var y = (window.pageYOffset || document.documentElement.scrollTop) + r.top - top - 12;
+        window.scrollTo(0, y);
+      }
+    }
+
+    function playTrack(index, scroll) {
+      if (index < 0 || index >= tracks.length) return;
+      if (current >= 0) rowEls[current].className = rowEls[current].className.replace(" playing", "");
+      current = index;
+      var tr = tracks[index];
+      var row = rowEls[index];
+      row.className += " playing";
+
+      audio.src = BASE + encodeURIComponent(tr.f);
+      safePlay();
+
+      document.title = tr.e + " " + tr.t + " - Los Topes";
+      nowPlaying.textContent = tr.e + " " + tr.t + " — " + tr.a + " (" + tr.y + ")";
+      nowPlaying.className = "now-playing show";
+      progress.className = "progress show";
+      progressFill.style.webkitTransform = progressFill.style.transform = "scaleX(0)";
+      currentTimeEl.textContent = "0:00";
+      durationEl.textContent = "0:00";
+      updateMediaSession(tr);
+      if (scroll) scrollToRow(row);
+    }
+
+    function togglePlayPause() {
+      if (current < 0) playTrack(0, true);
+      else if (audio.paused) safePlay();
+      else audio.pause();
+    }
+
+    function playNext() { playTrack((current + 1) % tracks.length, true); }
     function playPrev() {
-      playTrack((currentTrackIndex - 1 + tracks.length) % tracks.length);
+      // como en cualquier reproductor: si ya avanzó, vuelve al inicio del tema
+      if (current >= 0 && audio.currentTime > 3) { audio.currentTime = 0; return; }
+      playTrack((Math.max(current, 0) - 1 + tracks.length) % tracks.length, true);
     }
 
-    // Create a track element (no audio controls)
-    function createTrackElement(track, index) {
-      const trackElement = document.createElement('div');
-      trackElement.className = 'track';
+    function rowFromEvent(e) {
+      var el = e.target || e.srcElement;
+      while (el && el !== list) {
+        if (el.getAttribute && el.getAttribute("data-i") !== null) return el;
+        el = el.parentNode;
+      }
+      return null;
+    }
 
-  
-      trackElement.innerHTML = `
-        <div class="track-header">
-          <div class="track-number"}>${(index).toString().padStart(2, '0')}</div>
-          <div class="track-info">
-            <div class="track-title">${track.title} ${track.emoji}</div>
-            <div class="track-year">${track.author}, ${track.year}</div>
-          </div>
-        </div>
-      `;
-
-      // Click to play track
-        trackElement.addEventListener('click', (e) => {
-      playTrack(index);
-
-      const star = document.createElement('span');
+    function sparkle(row, e) {
+      if (e.clientX === undefined || (e.clientX === 0 && e.clientY === 0)) return;
+      var r = row.getBoundingClientRect();
+      var star = document.createElement("span");
+      star.className = "sparkle";
       star.textContent = "✨";
-      star.style.position = 'absolute';
-      star.style.left = e.offsetX + 'px';
-      star.style.top = e.offsetY + 'px';
-
-      trackElement.appendChild(star);
-
-      setTimeout(() => star.remove(), 600);
-    });
-
-      return trackElement;
+      star.style.left = (e.clientX - r.left - 8) + "px";
+      star.style.top = (e.clientY - r.top - 10) + "px";
+      row.appendChild(star);
+      setTimeout(function () { if (star.parentNode) star.parentNode.removeChild(star); }, 650);
     }
 
-    // Render all tracks
-    function renderTracks() {
-      trackList.innerHTML = '';
-      
-      const fragment = document.createDocumentFragment();
-      
-      tracks.forEach((track, i) => {
-        const trackElement = createTrackElement(track, i);
-        fragment.appendChild(trackElement);
-      });
+    render();
+    fitHeader();
+    window.addEventListener("resize", fitHeader);
+    window.addEventListener("load", fitHeader); // por si la fuente cambia la altura
 
-      trackList.appendChild(fragment);
-      updateScrollIndicator();
+    list.addEventListener("click", function (e) {
+      var row = rowFromEvent(e);
+      if (!row) return;
+      playTrack(+row.getAttribute("data-i"), false);
+      sparkle(row, e);
+    });
+    list.addEventListener("keydown", function (e) {
+      if (e.keyCode !== 13 && e.keyCode !== 32) return;
+      var row = rowFromEvent(e);
+      if (!row) return;
+      e.preventDefault();
+      playTrack(+row.getAttribute("data-i"), false);
+    });
+
+    $("prevBtn").addEventListener("click", playPrev);
+    $("nextBtn").addEventListener("click", playNext);
+    playPauseBtn.addEventListener("click", togglePlayPause);
+
+    audio.addEventListener("play", function () { playPauseBtn.className = "control-btn play-pause-btn is-playing"; });
+    audio.addEventListener("pause", function () { playPauseBtn.className = "control-btn play-pause-btn"; });
+    audio.addEventListener("ended", playNext);
+    audio.addEventListener("error", function () {
+      if (current >= 0 && audio.getAttribute("src")) nowPlaying.textContent = "⚠️ No se pudo cargar " + tracks[current].t;
+    });
+    audio.addEventListener("loadedmetadata", function () { durationEl.textContent = formatTime(audio.duration); });
+
+    var lastSecond = -1;
+    audio.addEventListener("timeupdate", function () {
+      if (!audio.duration) return;
+      var t = audio.currentTime;
+      var scale = "scaleX(" + Math.min(t / audio.duration, 1) + ")";
+      progressFill.style.webkitTransform = progressFill.style.transform = scale;
+      var sec = Math.floor(t);
+      if (sec !== lastSecond) { lastSecond = sec; currentTimeEl.textContent = formatTime(t); }
+    });
+
+    progressBar.addEventListener("click", function (e) {
+      if (!audio.duration) return;
+      var r = progressBar.getBoundingClientRect();
+      var pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+      audio.currentTime = pct * audio.duration;
+    });
+
+    if ("mediaSession" in navigator) {
+      var handlers = {
+        play: safePlay,
+        pause: function () { audio.pause(); },
+        previoustrack: playPrev,
+        nexttrack: playNext
+      };
+      for (var action in handlers) {
+        try { navigator.mediaSession.setActionHandler(action, handlers[action]); } catch (e) {}
+      }
     }
-
-    // Audio event listeners
-    audio.addEventListener('play', () => {
-      playPauseBtn.textContent = "⏸";
-    });
-
-    audio.addEventListener('pause', () => {
-      playPauseBtn.textContent = "▶";
-    });
-
-    audio.addEventListener('ended', () => {
-      playNext();
-    });
-
-    audio.addEventListener('loadedmetadata', () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener('timeupdate', () => {
-      if (audio.duration) {
-        const progress = (audio.currentTime / audio.duration) * 100;
-        progressFill.style.width = progress + '%';
-        currentTimeEl.textContent = formatTime(audio.currentTime);
-      }
-    });
-
-    // Progress bar click
-    progressBar.addEventListener('click', (e) => {
-      if (audio.duration) {
-        const rect = progressBar.getBoundingClientRect();
-        const percent = (e.clientX - rect.left) / rect.width;
-        audio.currentTime = percent * audio.duration;
-      }
-    });
-
-    // Control button listeners
-    prevBtn.addEventListener('click', playPrev);
-    nextBtn.addEventListener('click', playNext);
-    playPauseBtn.addEventListener('click', togglePlayPause);
-
-    // Scroll indicator
-    /* let ticking = false;
-    function updateScrollIndicator() {
-      const scrollTop = window.pageYOffset;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = scrollTop / docHeight;
-      const thumbHeight = Math.max(20, 100 * (window.innerHeight / document.documentElement.scrollHeight));
-      
-      scrollThumb.style.height = thumbHeight + 'px';
-      scrollThumb.style.transform = `translateY(${scrollPercent * (100 - thumbHeight)}px)`;
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(updateScrollIndicator);
-        ticking = true;
-      }
-    });
-    */
-    // Initialize
-    renderTracks();
+  })();
   </script>
 </body>
 </html>
