@@ -22,7 +22,12 @@
     html {
       background: #fff;
       -webkit-text-size-adjust: 100%;
+      overscroll-behavior-y: none; /* evita "tirar para recargar", que cortaría la música */
     }
+
+    /* Toques: sin zoom por doble toque, sin selección de texto ni menús al mantener apretado */
+    button, .track, .progress-bar { touch-action: manipulation; }
+    header, .track { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -64,41 +69,48 @@
 
     .logo {
       font-family: 'ringFont', Georgia, serif;
-      font-size: 1.7rem;
-      line-height: 1.2;
+      font-size: 1.35rem;
+      line-height: 1.15;
       color: #fff;
     }
 
     .subtitle {
       font-family: 'ringFont', Georgia, serif;
-      font-size: 0.85rem;
+      font-size: 0.72rem;
       margin-top: 2px;
     }
     .subtitle b { display: block; font-weight: normal; letter-spacing: 0.06em; }
 
-    .now-playing {
-      height: 1.6em;
-      line-height: 1.6em;
-      margin-top: 6px;
-      font-size: 0.78rem;
+    /* Tema actual: grande y legible de un vistazo */
+    .now-title, .now-meta {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      opacity: 0.75;
     }
-    .now-playing.show { opacity: 1; font-weight: 600; }
+    .now-title {
+      margin-top: 8px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.3;
+      height: 1.3em;
+    }
+    .now-meta {
+      font-size: 0.9rem;
+      line-height: 1.3;
+      height: 1.3em;
+    }
 
     .controls {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 4px;
+      margin-top: 8px;
     }
 
     .control-btn {
-      width: 42px;
-      height: 42px;
-      margin: 0 9px;
+      width: 64px;
+      height: 64px;
+      margin: 0 10px;
       border-radius: 50%;
       background: #fff;
       display: flex;
@@ -106,24 +118,24 @@
       justify-content: center;
     }
     .control-btn:active { background: #e3f0fa; }
-    .control-btn svg { width: 18px; height: 18px; fill: #13304d; display: block; }
+    .control-btn svg { width: 30px; height: 30px; fill: #13304d; display: block; }
 
-    .play-pause-btn { width: 54px; height: 54px; }
-    .play-pause-btn svg { width: 24px; height: 24px; }
+    .play-pause-btn { width: 84px; height: 84px; }
+    .play-pause-btn svg { width: 44px; height: 44px; }
     .icon-pause { display: none !important; }
     .is-playing .icon-play { display: none !important; }
     .is-playing .icon-pause { display: block !important; }
 
     /* Progreso: siempre ocupa lugar para que el header no cambie de alto */
     .progress {
-      max-width: 320px;
-      margin: 8px auto 0;
+      max-width: 360px;
+      margin: 10px auto 0;
       visibility: hidden;
     }
     .progress.show { visibility: visible; }
 
     .progress-bar {
-      height: 18px; /* zona táctil grande, barra visual fina */
+      height: 36px; /* zona táctil grande */
       position: relative;
       cursor: pointer;
     }
@@ -131,9 +143,9 @@
       position: absolute;
       left: 0;
       right: 0;
-      top: 6px;
-      height: 6px;
-      border-radius: 3px;
+      top: 13px;
+      height: 10px;
+      border-radius: 5px;
     }
     .progress-track { background: #b9d6ef; }
     .progress-fill {
@@ -147,7 +159,8 @@
     .time-display {
       display: flex;
       justify-content: space-between;
-      font-size: 0.7rem;
+      margin-top: -4px;
+      font-size: 0.9rem;
       font-variant-numeric: tabular-nums;
     }
 
@@ -290,7 +303,7 @@
     @keyframes sparkle { to { opacity: 0; transform: translateY(-14px) scale(1.4); } }
 
     @media (max-width: 380px) {
-      .logo { font-size: 1.5rem; }
+      .logo { font-size: 1.25rem; }
       .track { padding: 9px 10px; }
       .track-number { width: 24px; height: 24px; margin-right: 10px; font-size: 0.7rem; }
       .track-title { font-size: 0.86rem; }
@@ -306,7 +319,8 @@
     <div class="header-content">
       <div class="logo">Los Topes</div>
       <div class="subtitle"><b>Show Regreso</b>Nada ha cambiado en nuestro parque</div>
-      <div class="now-playing" id="nowPlaying">Tocá un tema para escuchar</div>
+      <div class="now-title" id="nowTitle">Tocá ▶ o un tema</div>
+      <div class="now-meta" id="nowMeta"></div>
       <div class="controls">
         <button type="button" class="control-btn" id="prevBtn" aria-label="Anterior">
           <svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg>
@@ -391,7 +405,8 @@
     var $ = function (id) { return document.getElementById(id); };
     var header = $("header");
     var list = $("trackList");
-    var nowPlaying = $("nowPlaying");
+    var nowTitle = $("nowTitle");
+    var nowMeta = $("nowMeta");
     var playPauseBtn = $("playPauseBtn");
     var progress = $("progress");
     var progressBar = $("progressBar");
@@ -469,6 +484,24 @@
       } catch (e) {}
     }
 
+    function setPlaybackState(state) {
+      if (!("mediaSession" in navigator)) return;
+      try { navigator.mediaSession.playbackState = state; } catch (e) {}
+    }
+
+    // barra de progreso en pantalla bloqueada, notificación y auto
+    function updatePosition() {
+      if (!("mediaSession" in navigator) || !navigator.mediaSession.setPositionState) return;
+      if (!isFinite(audio.duration) || audio.duration <= 0) return;
+      try {
+        navigator.mediaSession.setPositionState({
+          duration: audio.duration,
+          playbackRate: audio.playbackRate || 1,
+          position: Math.min(audio.currentTime, audio.duration)
+        });
+      } catch (e) {}
+    }
+
     function scrollToRow(el) {
       var r = el.getBoundingClientRect();
       var top = header.offsetHeight;
@@ -490,8 +523,8 @@
       safePlay();
 
       document.title = tr.e + " " + tr.t + " - Los Topes";
-      nowPlaying.textContent = tr.e + " " + tr.t + " — " + tr.a + " (" + tr.y + ")";
-      nowPlaying.className = "now-playing show";
+      nowTitle.textContent = tr.e + " " + tr.t;
+      nowMeta.textContent = tr.a + " · " + tr.y;
       progress.className = "progress show";
       progressFill.style.webkitTransform = progressFill.style.transform = "scaleX(0)";
       currentTimeEl.textContent = "0:00";
@@ -557,13 +590,14 @@
     $("nextBtn").addEventListener("click", playNext);
     playPauseBtn.addEventListener("click", togglePlayPause);
 
-    audio.addEventListener("play", function () { playPauseBtn.className = "control-btn play-pause-btn is-playing"; });
-    audio.addEventListener("pause", function () { playPauseBtn.className = "control-btn play-pause-btn"; });
+    audio.addEventListener("play", function () { playPauseBtn.className = "control-btn play-pause-btn is-playing"; setPlaybackState("playing"); });
+    audio.addEventListener("pause", function () { playPauseBtn.className = "control-btn play-pause-btn"; setPlaybackState("paused"); });
+    audio.addEventListener("seeked", updatePosition);
     audio.addEventListener("ended", playNext);
     audio.addEventListener("error", function () {
-      if (current >= 0 && audio.getAttribute("src")) nowPlaying.textContent = "⚠️ No se pudo cargar " + tracks[current].t;
+      if (current >= 0 && audio.getAttribute("src")) nowTitle.textContent = "⚠️ No se pudo cargar " + tracks[current].t;
     });
-    audio.addEventListener("loadedmetadata", function () { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("loadedmetadata", function () { durationEl.textContent = formatTime(audio.duration); updatePosition(); });
 
     var lastSecond = -1;
     audio.addEventListener("timeupdate", function () {
@@ -587,7 +621,14 @@
         play: safePlay,
         pause: function () { audio.pause(); },
         previoustrack: playPrev,
-        nexttrack: playNext
+        nexttrack: playNext,
+        seekto: function (d) {
+          if (!audio.duration || !d || !isFinite(d.seekTime)) return;
+          audio.currentTime = Math.max(0, Math.min(d.seekTime, audio.duration));
+          updatePosition();
+        }
+        // sin seekforward/seekbackward a propósito: en iPhone reemplazan
+        // los botones de tema anterior/siguiente por "±10 segundos"
       };
       for (var action in handlers) {
         try { navigator.mediaSession.setActionHandler(action, handlers[action]); } catch (e) {}
