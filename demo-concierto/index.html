@@ -200,6 +200,8 @@
     .track:hover { border-color: #74ACDF; }
     .track.playing { background: #74ACDF; border-color: #74ACDF; }
     .track.extra { border-style: dashed; }
+    .track.text-only { cursor: default; border-style: dashed; opacity: 0.7; }
+    .track.text-only:hover { border-color: #cfe3f4; }
 
     .track-number {
       width: 28px;
@@ -346,24 +348,27 @@
       ]},
       { name: "Segundo acto", tracks: [
         { n: 5,  t: "Paraná", a: "Los Topes", y: "2019", k: "A", e: "🏞️", nuevo: true, f: "5-Paraná-Los Topes-2019.mp3" },
+        { n: 6,  t: "América", a: "Nino Bravo", y: "1973", k: "A", e: "🌎", f: "6-América-Nino Bravo-1973.mp3" },
         { n: 7,  t: "Manolo", a: "Los Topes", y: "2009", k: "G", e: "⚽", nuevo: true, f: "7-Manolo-Los Topes-2009.mp3" },
-        { n: 10, t: "Un beso y una flor", a: "Nino Bravo", y: "1972", k: "E", e: "💐", f: "9-Un Beso Y Una Flor-Nino Bravo-1972.mp3" },
-        { n: 11, t: "Ánimo", a: "Verdulería Hugo y Cristina / Los Topes", y: "2004", k: "Em", e: "⛰️", f: "10-Animo-Verdulería HyC_Los Topes-2004.mp3" },
-        { n: 12, t: "Castillos en el aire", a: "Alberto Cortez", y: "1980", k: "Fm", e: "🏰", f: "11-Castillos en el aire -Alberto Cortez-1980.mp3" }
+        { n: 8,  t: "Natura", a: "Los Topes", y: "2026", k: "Ebm", e: "🌿", nuevo: true, note: "Versión corta", f: "8-Natura-Los Topes-2026.mp3" },
+        { n: 9,  t: "Un beso y una flor", a: "Nino Bravo", y: "1972", k: "E", e: "💐", f: "9-Un Beso Y Una Flor-Nino Bravo-1972.mp3" },
+        { n: 10, t: "Ánimo", a: "Verdulería Hugo y Cristina / Los Topes", y: "2004", k: "Em", e: "⛰️", f: "10-Animo-Verdulería HyC_Los Topes-2004.mp3" },
+        { n: 11, t: "Castillos en el aire", a: "Alberto Cortez", y: "1980", k: "Fm", e: "🏰", f: "11-Castillos en el aire -Alberto Cortez-1980.mp3" }
       ]},
       { name: "Tercer acto · Era Tolkien", tracks: [
-        { n: 13, t: "Hobbits", a: "Los Topes", y: "2003", k: "CΔ/G → F#", e: "🧙‍♂️", f: "12-Hobbits-Los Topes-2003.mp3" },
-        { n: 14, t: "Legolas", a: "Los Topes", y: "2003", k: "C → F#", e: "🏹", f: "14-Legolas-Los Topes-2003.mp3" },
-        { n: 15, t: "Boromir", a: "Los Topes", y: "2003", k: "A", e: "🛡️", f: "13-Boromir-Los Topes-2003.mp3" },
-        { n: 16, t: "Trancos", a: "Los Topes", y: "2003", k: "F → F#", e: "🗡️", f: "16-Trancos-Los Topes-2003.mp3" },
-        { n: 17, t: "Gandaralf", a: "Los Topes", y: "2003", k: "E → F#m", e: "🧙‍♂️", f: "15-Gandaralf-Los Topes-2003.mp3" }
+        { n: 12, t: "Hobbits", a: "Los Topes", y: "2003", k: "CΔ/G → F#", e: "🧙‍♂️", f: "12-Hobbits-Los Topes-2003.mp3" },
+        { n: 13, t: "Legolas", a: "Los Topes", y: "2003", k: "C → F#", e: "🏹", f: "14-Legolas-Los Topes-2003.mp3" },
+        { n: 14, t: "Boromir", a: "Los Topes", y: "2003", k: "A", e: "🛡️", f: "13-Boromir-Los Topes-2003.mp3" },
+        { n: 15, t: "Trancos", a: "Los Topes", y: "2003", k: "F → F#", e: "🗡️", f: "16-Trancos-Los Topes-2003.mp3" },
+        { n: 16, t: "Gandaralf", a: "Los Topes", y: "2003", k: "E → F#m", e: "🧙‍♂️", f: "15-Gandaralf-Los Topes-2003.mp3" }
       ]},
       { name: "Cierre", tracks: [
-        { n: 18, t: "El masón", a: "Los Topes", y: "2025", k: "E → A", e: "📐", nuevo: true, f: "17-El mason-Los Topes-2025.mp3" },
-        { n: 19, t: "Un velero llamado libertad", a: "José Luis Perales", y: "1979", k: "E", e: "⛵", f: "19-Un Velero Llamado Libertad-Jose Luis Perales-1979.mp3" },
-        { n: 20, t: "Intervenir", a: "Los Topes", y: "2016", k: "C", e: "🎯", nuevo: true, f: "20-intervenir-Los Topes-2016.mp3" },
-        { n: 21, t: "Punk", a: "Los Topes", y: "2001/2020", k: "C", e: "Ⓐ", nuevo: true, f: "21-Punk-Los Topes-2001_2020.mp3" },
-        { n: 22, t: "Las golondrinas", a: "Dávalos/Falú (versión Cafrune)", y: "1963", k: "intro A → D", e: "🕊️", f: "22-Las golondrinas-Dávalos_Falú(versión Cafrune)-1963.mp3" },
+        { n: 17, t: "El masón", a: "Los Topes", y: "2025", k: "E → A", e: "📐", nuevo: true, f: "17-El mason-Los Topes-2025.mp3" },
+        { n: 18, t: "Un velero llamado libertad", a: "José Luis Perales", y: "1979", k: "E", e: "⛵", f: "19-Un Velero Llamado Libertad-Jose Luis Perales-1979.mp3" },
+        { n: 19, t: "Intervenir", a: "Los Topes", y: "2016", k: "C", e: "🎯", nuevo: true, f: "20-intervenir-Los Topes-2016.mp3" },
+        { n: 20, t: "Punk", a: "Los Topes", y: "2001/2020", k: "C", e: "Ⓐ", nuevo: true, f: "21-Punk-Los Topes-2001_2020.mp3" },
+        { n: 21, t: "Las golondrinas", a: "Dávalos/Falú (versión Cafrune)", y: "1963", k: "intro A → D", e: "🕊️", f: "22-Las golondrinas-Dávalos_Falú(versión Cafrune)-1963.mp3" },
+        { n: 22, t: "¿Cover en inglés?" },
         { n: 23, t: "Somos Topes", a: "Los Topes", y: "2004", k: "G", e: "👥", f: "24-Somos Topes- Los Topes-2004.mp3" }
       ]},
       { name: "Posible bis", tracks: [
@@ -373,9 +378,8 @@
         { n: 25, t: "Campestre", a: "Los Topes", y: "2003", k: "Am", e: "🌾", note: "Instrumental + despedida", f: "26-Final campestre-Los Topes-2003.mp3" }
       ]},
       { name: "Extras", note: "Grabaciones que no están en la lista del show", extra: true, tracks: [
-        { t: "Thunderstruck", a: "AC/DC", y: "1990", e: "⚡", note: "¿Cover en inglés?", f: "23-Thunderstruck-AC_DC-1990.mp3" },
         { t: "Burrito", a: "Los Topes", y: "2020", e: "🐴", f: "8-Burrito-Los Topes-2020.mp3" },
-        { t: "Ahora sí que en la que en una", a: "Los Topes", y: "2003", e: "🎉", f: "18-Ahora sí que en la que en una-Los Topes-2003.mp3" }
+        { t: "Camello" }
       ]}
     ];
 
@@ -415,6 +419,15 @@
         if (sec.note) html.push('<span class="act-note">' + esc(sec.note) + '</span>');
         for (var j = 0; j < sec.tracks.length; j++) {
           var tr = sec.tracks[j];
+          if (!tr.f) { // tema de la lista sin grabación: solo texto, no se reproduce
+            html.push(
+              '<div class="track text-only">' +
+                '<div class="track-number">' + (tr.n ? pad2(tr.n) : '·') + '</div>' +
+                '<div class="track-info"><div class="track-title">' + esc(tr.t) + '</div></div>' +
+              '</div>'
+            );
+            continue;
+          }
           var i = tracks.length;
           tracks.push(tr);
           html.push(
