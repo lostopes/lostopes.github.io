@@ -352,9 +352,10 @@
 
   <script>
   (function () {
-    // n: número en la lista del show | k: tonalidad | nuevo: tema nuevo en el show
+    // n: número en la lista del show | k: acorde inicial (→ acorde de la segunda parte) | nuevo: tema nuevo en el show
     var sections = [
       { name: "Primer acto", tracks: [
+        { t: "Intro" },
         { n: 1,  t: "Zampando tortas", a: "Los Topes", y: "2003", k: "D#Δ/G", e: "🍰", f: "1-Zampando tortas-Los Topes-2003.mp3" },
         { n: 2,  t: "Hoy 2006", a: "Los Topes", y: "2006", k: "F", e: "🌞", note: "Con intro de «Noelia»", f: "2-Hoy 2006-Los Topes-2006.mp3" },
         { n: 3,  t: "Voy buscando", a: "Nino Bravo", y: "1969", k: "E", e: "🔍", f: "3-Voy buscando-Nino Bravo-1969.mp3" },
@@ -370,11 +371,12 @@
         { n: 11, t: "Castillos en el aire", a: "Alberto Cortez", y: "1980", k: "Fm", e: "🏰", f: "11-Castillos en el aire -Alberto Cortez-1980.mp3" }
       ]},
       { name: "Tercer acto · Era Tolkien", tracks: [
+        { t: "Intro guitarra: La comarca (Howard Shore) · D" },
         { n: 12, t: "Hobbits", a: "Los Topes", y: "2003", k: "CΔ/G → F#", e: "🧙‍♂️", f: "12-Hobbits-Los Topes-2003.mp3" },
-        { n: 13, t: "Legolas", a: "Los Topes", y: "2003", k: "C → F#", e: "🏹", f: "14-Legolas-Los Topes-2003.mp3" },
-        { n: 14, t: "Boromir", a: "Los Topes", y: "2003", k: "A", e: "🛡️", f: "13-Boromir-Los Topes-2003.mp3" },
-        { n: 15, t: "Trancos", a: "Los Topes", y: "2003", k: "F → F#", e: "🗡️", f: "16-Trancos-Los Topes-2003.mp3" },
-        { n: 16, t: "Gandaralf", a: "Los Topes", y: "2003", k: "E → F#m", e: "🧙‍♂️", f: "15-Gandaralf-Los Topes-2003.mp3" }
+        { n: 13, t: "Boromir", a: "Los Topes", y: "2003", k: "A", e: "🛡️", f: "13-Boromir-Los Topes-2003.mp3" },
+        { n: 14, t: "Legolas", a: "Los Topes", y: "2003", k: "C → F#", e: "🏹", f: "14-Legolas-Los Topes-2003.mp3" },
+        { n: 15, t: "Gandaralf", a: "Los Topes", y: "2003", k: "E → F#m", e: "🧙‍♂️", f: "15-Gandaralf-Los Topes-2003.mp3" },
+        { n: 16, t: "Trancos", a: "Los Topes", y: "2003", k: "Fm → F#", e: "🗡️", f: "16-Trancos-Los Topes-2003.mp3" }
       ]},
       { name: "Cierre", tracks: [
         { n: 17, t: "El masón", a: "Los Topes", y: "2025", k: "E → A", e: "📐", nuevo: true, f: "17-El mason-Los Topes-2025.mp3" },
@@ -385,7 +387,7 @@
         { n: 22, t: "¿Cover en inglés?" },
         { n: 23, t: "Somos Topes", a: "Los Topes", y: "2004", k: "G", e: "👥", f: "24-Somos Topes- Los Topes-2004.mp3" }
       ]},
-      { name: "Posible bis", tracks: [
+      { name: "Posible bis", note: "Alternativas: Ella la araña / Brasil / Fabriqué / Cómo construir", tracks: [
         { n: 24, t: "El mundo es feliz", a: "Los Topes", y: "2003", k: "C", e: "🌍", f: "25-(bis)El mundo es feliz-Los Topes-2003.mp3" }
       ]},
       { name: "Final", tracks: [
@@ -454,7 +456,7 @@
                 '<div class="track-meta">' + esc(tr.a) + ' · ' + esc(tr.y) + '</div>' +
                 (tr.note ? '<div class="track-note">' + esc(tr.note) + '</div>' : '') +
               '</div>' +
-              (tr.k ? '<span class="key" title="Tonalidad">' + esc(tr.k) + '</span>' : '') +
+              (tr.k ? '<span class="key" title="Acorde inicial → segunda parte">' + esc(tr.k) + '</span>' : '') +
             '</div>'
           );
         }
